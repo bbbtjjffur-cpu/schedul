@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Academic OS — زكريا ❤️ عائشة</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Tajawal & SF Pro Fallback -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons for crisp Apple-like iconography -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        ios: {
+                            blue: '#007AFF',
+                            darkBlue: '#0A84FF',
+                            green: '#34C759',
+                            red: '#FF3B30',
+                            orange: '#FF9500',
+                            purple: '#AF52DE',
+                            pink: '#FF2D55',
+                            teal: '#5AC8FA',
+                            indigo: '#5856D6',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.45);
+            --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.08), inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
+            --card-bg: rgba(255, 255, 255, 0.55);
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+        }
+
+        html.dark {
+            --glass-bg: rgba(28, 28, 32, 0.68);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-shadow: 0 25px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+            --card-bg: rgba(38, 38, 44, 0.52);
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: background-color 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
+        }
+
+        /* Dynamic Mesh Gradient Background */
+        .mesh-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            overflow: hidden;
+            background: #f2f4f8;
+            transition: background 0.8s ease;
+        }
+        html.dark .mesh-bg {
+            background: #07070c;
+        }
+
+        .mesh-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(85px);
+            opacity: 0.55;
+            animation: floatBlob 22s infinite alternate cubic-bezier(0.45, 0.05, 0.55, 0.95);
+            will-change: transform;
+        }
+        html.dark .mesh-blob {
+            opacity: 0.32;
+            filter: blur(100px);
+        }
+
+        .blob-1 {
+            width: 55vw; height: 55vw; max-width: 650px; max-height: 650px;
+            background: radial-gradient(circle, #ff2d55, #af52de);
+            top: -15%; right: -10%;
+            animation-delay: 0s;
+        }
+        .blob-2 {
+            width: 50vw; height: 50vw; max-width: 600px; max-height: 600px;
+            background: radial-gradient(circle, #007aff, #5ac8fa);
+            bottom: -15%; left: -10%;
+            animation-delay: -6s;
+        }
+        .blob-3 {
+            width: 45vw; height: 45vw; max-width: 500px; max-height: 500px;
+            background: radial-gradient(circle, #5856d6, #34c759);
+            top: 35%; left: 25%;
+            animation-delay: -12s;
+        }
+
+        @keyframes floatBlob {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            50% { transform: translate(-40px, 35px) scale(1.12) rotate(12deg); }
+            100% { transform: translate(35px, -30px) scale(0.92) rotate(-10deg); }
+        }
+
+        /* Apple Frosted Glass */
+        .apple-glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(28px) saturate(190%);
+            -webkit-backdrop-filter: blur(28px) saturate(190%);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .apple-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(22px) saturate(180%);
+            -webkit-backdrop-filter: blur(22px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+        }
+
+        .apple-card:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Dynamic Island */
+        .dynamic-island {
+            background: rgba(12, 12, 14, 0.92);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0,0,0,0.8);
+            color: #ffffff;
+            transition: all 0.55s cubic-bezier(0.32, 0.72, 0, 1);
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .dynamic-island:hover, .dynamic-island.expanded {
+            transform: scale(1.02);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 25px rgba(10, 132, 255, 0.25);
+        }
+
+        /* Heart Beat Animation */
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 12px rgba(255, 45, 85, 0.6)); }
+            15% { transform: scale(1.22); filter: drop-shadow(0 0 24px rgba(255, 45, 85, 0.95)); }
+            30% { transform: scale(1.05); }
+            45% { transform: scale(1.18); filter: drop-shadow(0 0 20px rgba(255, 45, 85, 0.85)); }
+        }
+        .heart-beat {
+            display: inline-block;
+            animation: heartPulse 2.2s infinite ease-in-out;
+        }
+
+        /* Splash Screen Transition */
+        #splash-screen {
+            transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.85s;
+        }
+        #splash-screen.hidden-splash {
+            opacity: 0;
+            transform: scale(1.12);
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Custom Apple Checkbox */
+        .ios-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid rgba(142, 142, 147, 0.6);
+            outline: none;
+            cursor: pointer;
+            display: inline-grid;
+            place-content: center;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            background: rgba(255,255,255,0.08);
+        }
+        .ios-checkbox:checked {
+            background: #34C759;
+            border-color: #34C759;
+            transform: scale(1.06);
+        }
+        .ios-checkbox:checked::before {
+            content: "✓";
+            color: white;
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        /* macOS Dock Effect */
+        .dock-container {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .dock-item {
+            transition: all 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+            transform-origin: bottom center;
+        }
+        @media (min-width: 768px) {
+            .dock-item:hover {
+                transform: translateY(-10px) scale(1.22);
+                margin: 0 6px;
+            }
+        }
+
+        /* Activity Rings SVG transitions */
+        .ring-circle {
+            transition: stroke-dashoffset 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        /* Page Transition Animation */
+        .spa-page {
+            animation: pageFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(14px) scale(0.99); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(142, 142, 147, 0.35); border-radius: 999px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(142, 142, 147, 0.6); }
+    </style>
+</head>
+<body class="min-h-screen pb-32 selection:bg-ios-blue selection:text-white">
+
+    <!-- Dynamic Mesh Gradient Background -->
+    <div class="mesh-bg">
+        <div class="mesh-blob blob-1"></div>
+        <div class="mesh-blob blob-2"></div>
+        <div class="mesh-blob blob-3"></div>
+    </div>
+
+    <!-- Confetti Celebration Canvas -->
+    <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+    <!-- ==========================================
+         1. SPLASH / HERO SCREEN (واجهة الترحيب السينمائية)
+    =========================================== -->
+    <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 text-center select-none"
+         style="background: radial-gradient(circle at center, rgba(20,20,28,0.82) 0%, rgba(7,7,12,0.96) 100%); backdrop-filter: blur(40px);">
+        
+        <!-- Subtle ambient glow behind card -->
+        <div class="absolute w-80 h-80 rounded-full bg-gradient-to-tr from-ios-pink/30 via-ios-purple/25 to-ios-blue/30 blur-3xl animate-pulse pointer-events-none"></div>
+
+        <div class="relative max-w-md w-full apple-glass rounded-[2.5rem] p-8 sm:p-10 border border-white/20 shadow-2xl flex flex-col items-center">
+            <!-- iOS Lockscreen-style Top Pill -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-medium text-white/80 mb-6">
+                <i class="ph-fill ph-sparkle text-ios-pink"></i>
+                <span>Academic OS • iOS 18 Design</span>
+            </div>
+
+            <!-- Romantic Signature Header -->
+            <div class="my-4">
+                <h1 class="text-4xl sm:text-5xl font-black tracking-tight text-white flex items-center justify-center gap-3">
+                    <span>زكريا</span>
+                    <span class="heart-beat text-ios-pink">❤️</span>
+                    <span>عائشة</span>
+                </h1>
+                <p class="mt-4 text-sm sm:text-base text-white/70 font-normal leading-relaxed">
+                    مساحة أكاديمية ذكية مصممة بشغف، تجمع بين الفخامة، التنظيم، والإنجاز اليومي خطوة بخطوة.
+                </p>
+            </div>
+
+            <!-- Live Date & Time Preview on Splash -->
+            <div class="w-full my-6 py-4 px-5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between text-white/90">
+                <div class="text-right">
+                    <div id="splash-day" class="text-xs text-white/60 font-medium">اليوم</div>
+                    <div id="splash-status" class="text-sm font-bold text-ios-teal mt-0.5">جاهز للانطلاق</div>
+                </div>
+                <div id="splash-clock" class="font-mono text-2xl font-semibold tracking-wider">10:00</div>
+            </div>
+
+            <!-- Enter Dashboard CTA Button -->
+            <button onclick="enterDashboard()" class="group relative w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-ios-blue via-ios-indigo to-ios-purple text-white font-bold text-base shadow-lg shadow-ios-blue/30 hover:shadow-ios-blue/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-3 overflow-hidden">
+                <span class="relative z-10">الدخول إلى لوحة التحكم</span>
+                <i class="ph-bold ph-arrow-left relative z-10 group-hover:-translate-x-1.5 transition-transform"></i>
+                <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </button>
+
+            <span class="mt-4 text-[11px] text-white/40 flex items-center gap-1.5">
+                <i class="ph-fill ph-speaker-high"></i>
+                تأثيرات صوتية تفاعلية مدمجة (Haptic Audio)
+            </span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         2. TOP DYNAMIC ISLAND & FLOATING NAVBAR
+    =========================================== -->
+    <header class="sticky top-3 z-40 px-3 sm:px-6 max-w-7xl mx-auto">
+        <div class="flex flex-col items-center gap-3">
+            
+            <!-- Dynamic Island Capsule (الجزيرة التفاعلية) -->
+            <div id="dynamic-island" onclick="toggleIslandExpand()" class="dynamic-island rounded-[2rem] px-4 py-2.5 w-full max-w-md sm:max-w-lg transition-all">
+                <!-- Compact Row -->
+                <div class="flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <span id="island-dot" class="w-2.5 h-2.5 rounded-full bg-ios-green animate-ping shrink-0"></span>
+                        <span id="island-icon" class="text-lg text-ios-teal shrink-0"><i class="ph-fill ph-student"></i></span>
+                        <p id="island-title" class="text-xs sm:text-sm font-bold truncate">جاري فحص الجدول الأكاديمي...</p>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <span id="island-badge" class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-white/15 text-white">--:--</span>
+                        <i id="island-chevron" class="ph-bold ph-caret-down text-xs text-white/60 transition-transform duration-300"></i>
+                    </div>
+                </div>
+
+                <!-- Progress Bar inside Dynamic Island -->
+                <div class="w-full bg-white/15 h-1.5 rounded-full mt-2 overflow-hidden">
+                    <div id="island-progress" class="bg-gradient-to-r from-ios-teal via-ios-blue to-ios-pink h-full rounded-full transition-all duration-700" style="width: 45%"></div>
+                </div>
+
+                <!-- Expanded Details (Shown when clicked) -->
+                <div id="island-expanded" class="hidden pt-3 mt-3 border-t border-white/15 text-xs text-white/80 space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <span id="island-subdetail" class="text-white/90 font-medium">تفاصيل المحاضرة الحالية</span>
+                        <span id="island-live-clock" class="font-mono text-ios-teal font-semibold">00:00:00</span>
+                    </div>
+                    <!-- Time Simulator for testing any day/hour easily -->
+                    <div onclick="event.stopPropagation()" class="bg-white/10 rounded-xl p-2.5 flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center gap-1.5 text-[11px] text-white/80">
+                            <i class="ph-fill ph-clock-clockwise text-ios-orange"></i>
+                            <span>محاكي التوقيت الذكي:</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <select id="sim-day" onchange="applyTimeSimulation()" class="bg-black/60 text-white text-[11px] rounded-lg px-2 py-1 border border-white/20 outline-none">
+                                <option value="real">التوقيت الحقيقي للجهاز</option>
+                                <option value="0">الأحد (يوم دوام كامل)</option>
+                                <option value="1">الإثنين (عطلة OFF)</option>
+                                <option value="2">الثلاثاء (يوم دوام كامل)</option>
+                                <option value="3">الأربعاء (عطلة OFF)</option>
+                                <option value="4">الخميس (بايثون + مودل)</option>
+                                <option value="5">الجمعة (عطلة نهاية الأسبوع)</option>
+                            </select>
+                            <select id="sim-hour" onchange="applyTimeSimulation()" class="bg-black/60 text-white text-[11px] rounded-lg px-2 py-1 border border-white/20 outline-none hidden">
+                                <option value="10.5">10:30 ص (محاضرة نمذجة)</option>
+                                <option value="11.5">11:30 ص (تنظيم وعمارة)</option>
+                                <option value="12.5">12:30 م (برمجة مرئية)</option>
+                                <option value="13.5">01:30 م (بريك الغداء ☕)</option>
+                                <option value="14.5">02:30 م (برمجة بايثون)</option>
+                                <option value="16.75">04:45 م (العلوم العسكرية)</option>
+                                <option value="17.75">05:45 م (القيادة / مهارات)</option>
+                                <option value="20.0">08:00 م (المساء)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floating Frosted Navigation Bar -->
+            <nav class="apple-glass rounded-2xl p-1.5 w-full flex items-center justify-between gap-2">
+                <!-- Brand Title -->
+                <div class="flex items-center gap-2.5 pr-3">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-ios-pink via-ios-purple to-ios-blue flex items-center justify-center text-white shadow-md">
+                        <i class="ph-fill ph-heart text-lg"></i>
+                    </div>
+                    <div class="hidden sm:block">
+                        <div class="text-xs font-extrabold tracking-tight flex items-center gap-1">
+                            <span>زكريا</span>
+                            <span class="text-ios-pink">❤️</span>
+                            <span>عائشة</span>
+                        </div>
+                        <div class="text-[10px] opacity-60 font-medium">Academic Workspace</div>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <div class="flex items-center bg-black/5 dark:bg-white/5 p-1 rounded-xl gap-1 flex-1 sm:flex-initial justify-center">
+                    <button onclick="switchPage('schedule')" id="nav-schedule" class="nav-btn flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all bg-ios-blue text-white shadow-sm">
+                        <i class="ph-fill ph-calendar-blank text-base"></i>
+                        <span>الجدول الذكي</span>
+                    </button>
+                    <button onclick="switchPage('tracker')" id="nav-tracker" class="nav-btn flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all opacity-75 hover:opacity-100">
+                        <i class="ph-fill ph-check-circle text-base"></i>
+                        <span>متتبع الإنجاز</span>
+                    </button>
+                    <button onclick="switchPage('zen')" id="nav-zen" class="nav-btn flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all opacity-75 hover:opacity-100">
+                        <i class="ph-fill ph-timer text-base"></i>
+                        <span>المودل والتركيز</span>
+                    </button>
+                </div>
+
+                <!-- Quick Controls (Sound & Theme) -->
+                <div class="flex items-center gap-1.5 pl-1">
+                    <button onclick="toggleSound()" id="sound-toggle-btn" title="الأصوات التفاعلية" class="w-9 h-9 rounded-xl flex items-center justify-center bg-black/5 dark:bg-white/10 hover:scale-105 active:scale-95 transition">
+                        <i id="sound-icon" class="ph-fill ph-speaker-high text-base text-ios-blue"></i>
+                    </button>
+                    <button onclick="toggleTheme()" id="theme-toggle-btn" title="تبديل المظهر النهاري/الليلي" class="w-9 h-9 rounded-xl flex items-center justify-center bg-black/5 dark:bg-white/10 hover:scale-105 active:scale-95 transition">
+                        <i id="theme-icon" class="ph-fill ph-moon-stars text-base text-ios-orange"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         MAIN CONTENT CONTAINER
+    =========================================== -->
+    <main class="max-w-7xl mx-auto px-3 sm:px-6 mt-6">
+
+        <!-- ==========================================
+             PAGE 1: الجدول الأسبوعي التفاعلي والذكي
+        =========================================== -->
+        <section id="page-schedule" class="spa-page space-y-6">
+            
+            <!-- Top Highlight Banner: Next Lecture & Export Actions -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <!-- Dynamic Next/Current Lecture Card -->
+                <div class="lg:col-span-2 apple-card rounded-3xl p-5 sm:p-6 relative overflow-hidden border-r-4 border-r-ios-blue">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="space-y-1.5">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-ios-blue/15 text-ios-blue dark:text-ios-teal text-xs font-bold">
+                                <span class="w-2 h-2 rounded-full bg-ios-blue animate-ping"></span>
+                                <span id="next-card-label">المحاضرة الحالية / القادمة</span>
+                            </div>
+                            <h2 id="next-card-title" class="text-xl sm:text-2xl font-black tracking-tight mt-1">نمذجة نظم البرمجيات</h2>
+                            <p id="next-card-meta" class="text-xs sm:text-sm opacity-75 flex flex-wrap items-center gap-3">
+                                <span><i class="ph-fill ph-clock ml-1 text-ios-blue"></i>10:00 - 11:00 ص</span>
+                                <span><i class="ph-fill ph-map-pin ml-1 text-ios-pink"></i>مختبر الحاسوب</span>
+                                <span><i class="ph-fill ph-calendar ml-1 text-ios-purple"></i>الأحد والثلاثاء</span>
+                            </p>
+                        </div>
+
+                        <div id="next-card-action" class="flex items-center gap-2 shrink-0">
+                            <!-- Filled dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export .ICS & Summary Stats Card -->
+                <div class="apple-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between gap-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-sm font-bold opacity-75">مزامنة التقويم الذكي</h3>
+                            <p class="text-xs opacity-60 mt-0.5">تصدير الجدول لتقويم Apple & Google</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-2xl bg-ios-purple/15 text-ios-purple flex items-center justify-center text-xl">
+                            <i class="ph-fill ph-calendar-plus"></i>
+                        </div>
+                    </div>
+
+                    <button onclick="exportScheduleICS()" class="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-ios-blue to-ios-indigo text-white text-xs sm:text-sm font-bold shadow-md hover:opacity-95 active:scale-[0.98] transition flex items-center justify-center gap-2">
+                        <i class="ph-bold ph-download-simple text-base"></i>
+                        <span>تحميل ملف التقويم (.ics)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter Bar & Day Selector Pills -->
+            <div class="apple-glass rounded-2xl p-3 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+                <!-- Day Tabs -->
+                <div class="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 no-scrollbar">
+                    <button onclick="setDayFilter('all')" data-day="all" class="day-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-ios-blue text-white shrink-0 transition">كل الأسبوع</button>
+                    <button onclick="setDayFilter('sun')" data-day="sun" class="day-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-black/5 dark:bg-white/10 shrink-0 transition">الأحد</button>
+                    <button onclick="setDayFilter('mon')" data-day="mon" class="day-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-black/5 dark:bg-white/10 shrink-0 transition">الإثنين (OFF)</button>
+                    <button onclick="setDayFilter('tue')" data-day="tue" class="day-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-black/5 dark:bg-white/10 shrink-0 transition">الثلاثاء</button>
+                    <button onclick="setDayFilter('wed')" data-day="wed" class="day-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-black/5 dark:bg-white/10 shrink-0 transition">الأربعاء (OFF)</button>
+                    <button onclick="setDayFilter('thu')" data-day="thu" class="day-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-black/5 dark:bg-white/10 shrink-0 transition">الخميس</button>
+                </div>
+
+                <!-- Mode Filter (الكل / وجاهي / أونلاين / القاعات) -->
+                <div class="flex items-center gap-1.5 bg-black/5 dark:bg-white/5 p-1 rounded-xl shrink-0">
+                    <button onclick="setModeFilter('all')" data-mode="all" class="mode-pill px-3 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-white/15 shadow-sm transition">الكل</button>
+                    <button onclick="setModeFilter('inperson')" data-mode="inperson" class="mode-pill px-3 py-1.5 rounded-lg text-xs font-bold opacity-70 hover:opacity-100 transition">وجاهي</button>
+                    <button onclick="setModeFilter('online')" data-mode="online" class="mode-pill px-3 py-1.5 rounded-lg text-xs font-bold opacity-70 hover:opacity-100 transition">أونلاين</button>
+                    <button onclick="setModeFilter('rooms')" data-mode="rooms" class="mode-pill px-3 py-1.5 rounded-lg text-xs font-bold opacity-70 hover:opacity-100 transition">القاعات</button>
+                </div>
+            </div>
+
+            <!-- Weekly Schedule Grid Container -->
+            <div id="schedule-container" class="space-y-6">
+                <!-- Rendered dynamically by JS -->
+            </div>
+
+            <!-- Smart Attendance Tracker (حاسبة الحضور والغياب الذكية) -->
+            <div class="apple-card rounded-3xl p-5 sm:p-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5">
+                    <div>
+                        <h3 class="text-lg sm:text-xl font-black flex items-center gap-2">
+                            <i class="ph-fill ph-user-check text-ios-green"></i>
+                            <span>حاسبة الحضور والغياب الذكية (Attendance Tracker)</span>
+                        </h3>
+                        <p class="text-xs opacity-70 mt-0.5">تتبع عدد الغيابات لكل مساق مع تنبيه تلقائي قبل تجاوز الحد المسموح (6 غيابات كحد أقصى).</p>
+                    </div>
+                    <button onclick="resetAttendance()" class="self-start sm:self-auto px-3 py-1.5 rounded-xl bg-black/5 dark:bg-white/10 text-xs font-bold hover:bg-ios-red/20 hover:text-ios-red transition">
+                        تصفير العدادات
+                    </button>
+                </div>
+
+                <div id="attendance-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             PAGE 2: متتبع الإنجاز والمراجعات اليومية
+        =========================================== -->
+        <section id="page-tracker" class="spa-page hidden space-y-6">
+            
+            <!-- Apple Activity Rings Overview Header -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                <!-- Main Activity Rings Card -->
+                <div class="apple-card rounded-3xl p-6 flex items-center justify-between gap-6">
+                    <div class="space-y-2">
+                        <span class="px-3 py-1 rounded-full bg-ios-pink/15 text-ios-pink text-xs font-bold">حلقات النشاط الأكاديمي</span>
+                        <h2 class="text-2xl font-black">مؤشر الإنجاز العام</h2>
+                        <p class="text-xs opacity-70 leading-relaxed">أغلق حلقاتك اليومية (الحضور، التلخيص، المراجعة، والواجبات) للاحتفال بإنجازك!</p>
+                        <div class="pt-2 space-y-1 text-xs font-bold">
+                            <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-[#FF2D55]"></span><span>الحضور والتلخيص: <span id="ring-stat-1">0%</span></span></div>
+                            <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-[#34C759]"></span><span>المراجعة النهائية: <span id="ring-stat-2">0%</span></span></div>
+                            <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-[#007AFF]"></span><span>حل الواجبات: <span id="ring-stat-3">0%</span></span></div>
+                        </div>
+                    </div>
+
+                    <!-- Triple Concentric Apple Activity Rings SVG -->
+                    <div class="relative w-36 h-36 shrink-0 flex items-center justify-center">
+                        <svg class="w-full h-full" viewBox="0 0 140 140">
+                            <!-- Background Tracks -->
+                            <circle cx="70" cy="70" r="56" stroke="rgba(255,45,85,0.18)" stroke-width="11" fill="none" />
+                            <circle cx="70" cy="70" r="42" stroke="rgba(52,199,89,0.18)" stroke-width="11" fill="none" />
+                            <circle cx="70" cy="70" r="28" stroke="rgba(0,122,255,0.18)" stroke-width="11" fill="none" />
+                            
+                            <!-- Active Rings -->
+                            <circle id="ring-outer" class="ring-circle" cx="70" cy="70" r="56" stroke="#FF2D55" stroke-width="11" stroke-linecap="round" fill="none" stroke-dasharray="351.8" stroke-dashoffset="351.8" />
+                            <circle id="ring-middle" class="ring-circle" cx="70" cy="70" r="42" stroke="#34C759" stroke-width="11" stroke-linecap="round" fill="none" stroke-dasharray="263.8" stroke-dashoffset="263.8" />
+                            <circle id="ring-inner" class="ring-circle" cx="70" cy="70" r="28" stroke="#007AFF" stroke-width="11" stroke-linecap="round" fill="none" stroke-dasharray="175.9" stroke-dashoffset="175.9" />
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                            <span id="overall-ring-pct" class="text-lg font-black font-mono">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week Selector & Celebration Trigger -->
+                <div class="lg:col-span-2 apple-card rounded-3xl p-6 flex flex-col justify-between gap-4">
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                            <h3 class="text-lg font-black flex items-center gap-2">
+                                <i class="ph-fill ph-list-checks text-ios-blue"></i>
+                                <span>سجل المتابعة الأسبوعي (Apple Reminders Style)</span>
+                            </h3>
+                            <p class="text-xs opacity-70">اختر الأسبوع الأكاديمي وقم بتحديث حالة كل محاضرة أو تدوين الملاحظات السريعة.</p>
+                        </div>
+
+                        <select id="tracker-week-select" onchange="changeTrackerWeek(this.value)" class="apple-glass px-4 py-2 rounded-xl text-xs sm:text-sm font-bold outline-none cursor-pointer">
+                            <option value="w1">الأسبوع الأكاديمي 1</option>
+                            <option value="w2">الأسبوع الأكاديمي 2</option>
+                            <option value="w3">الأسبوع الأكاديمي 3</option>
+                            <option value="w4">الأسبوع الأكاديمي 4 (امتحانات أولى)</option>
+                            <option value="w5">الأسبوع الأكاديمي 5</option>
+                            <option value="w6">الأسبوع الأكاديمي 6</option>
+                            <option value="w7">الأسبوع الأكاديمي 7</option>
+                            <option value="w8">الأسبوع الأكاديمي 8 (منتصف الفصل)</option>
+                        </select>
+                    </div>
+
+                    <!-- Course Mini Progress Pills -->
+                    <div id="course-mini-rings" class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Courses Checklist Cards Grid -->
+            <div id="tracker-courses-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <!-- Populated via JS -->
+            </div>
+        </section>
+
+        <!-- ==========================================
+             PAGE 3: مساعد الإنتاجية والمودل ووضع التركيز
+        =========================================== -->
+        <section id="page-zen" class="spa-page hidden space-y-6">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Left Column: Zen / Study Mode (Pomodoro + Ambient Sound) -->
+                <div class="lg:col-span-7 apple-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-ios-indigo/20 text-ios-indigo dark:text-ios-teal text-xs font-bold">
+                            <i class="ph-fill ph-flower-lotus"></i>
+                            <span>وضع التركيز العميق • Zen Study Mode</span>
+                        </div>
+
+                        <!-- Pomodoro Mode Presets -->
+                        <div class="flex items-center gap-1 bg-black/5 dark:bg-white/10 p-1 rounded-xl text-xs font-bold">
+                            <button onclick="setPomodoroMode(25, 'جلسة تركيز (Pomodoro)')" id="pomo-25" class="px-3 py-1.5 rounded-lg bg-ios-blue text-white transition">25 د تركيز</button>
+                            <button onclick="setPomodoroMode(5, 'استراحة قصيرة ☕')" id="pomo-5" class="px-3 py-1.5 rounded-lg opacity-75 hover:opacity-100 transition">5 د راحة</button>
+                            <button onclick="setPomodoroMode(45, 'محاضرة عميقة 🔥')" id="pomo-45" class="px-3 py-1.5 rounded-lg opacity-75 hover:opacity-100 transition">45 د عميق</button>
+                        </div>
+                    </div>
+
+                    <!-- Apple Stopwatch Digital Display -->
+                    <div class="my-8 flex flex-col items-center justify-center text-center">
+                        <span id="pomo-status-label" class="text-xs font-bold uppercase tracking-widest opacity-60 mb-2">جلسة تركيز (Pomodoro)</span>
+                        <div id="pomo-timer-display" class="font-mono text-6xl sm:text-8xl font-extrabold tracking-tighter select-none">
+                            25:00
+                        </div>
+
+                        <!-- Active Focus Course Selector -->
+                        <div class="mt-4 flex items-center gap-2">
+                            <span class="text-xs opacity-70">المادة الحالية:</span>
+                            <select id="zen-course-select" class="bg-black/5 dark:bg-white/10 px-3 py-1.5 rounded-xl text-xs font-bold outline-none">
+                                <option>برمجة بايثون 🐍</option>
+                                <option>نمذجة نظم البرمجيات 📐</option>
+                                <option>تنظيم وعمارة الحاسوب 💻</option>
+                                <option>برمجة مرئية 🎨</option>
+                                <option>العلوم العسكرية وأسايمنت المودل 🎖️</option>
+                                <option>القيادة ومهارات حياتية 🌱</option>
+                            </select>
+                        </div>
+
+                        <!-- Start / Pause / Reset Controls -->
+                        <div class="mt-7 flex items-center gap-4">
+                            <button onclick="togglePomodoro()" id="pomo-start-btn" class="px-8 py-3.5 rounded-2xl bg-ios-green text-white font-bold text-sm shadow-lg shadow-ios-green/30 hover:scale-105 active:scale-95 transition flex items-center gap-2">
+                                <i id="pomo-play-icon" class="ph-fill ph-play text-lg"></i>
+                                <span id="pomo-btn-text">ابدأ الجلسة</span>
+                            </button>
+                            <button onclick="resetPomodoro()" class="px-5 py-3.5 rounded-2xl bg-black/10 dark:bg-white/10 font-bold text-sm hover:bg-black/20 dark:hover:bg-white/20 active:scale-95 transition flex items-center gap-2">
+                                <i class="ph-bold ph-arrow-counter-clockwise"></i>
+                                <span>إعادة ضبط</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Ambient Sound Synthesizer (مشغل الخلفيات الصوتية الهادئة) -->
+                    <div class="pt-5 border-t border-black/10 dark:border-white/10">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold flex items-center gap-1.5">
+                                <i class="ph-fill ph-waveform text-ios-purple text-base"></i>
+                                <span>مولّد الخلفيات الصوتية الهادئة (Web Audio Ambient)</span>
+                            </span>
+                            <span id="ambient-status" class="text-[11px] opacity-60">متوقف</span>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-2.5">
+                            <button onclick="toggleAmbient('rain')" id="amb-rain" class="ambient-btn py-3 px-3 rounded-2xl bg-black/5 dark:bg-white/5 hover:bg-ios-blue/15 border border-transparent transition flex flex-col items-center gap-1">
+                                <i class="ph-fill ph-cloud-rain text-xl text-ios-teal"></i>
+                                <span class="text-xs font-bold">مطر هادئ</span>
+                            </button>
+                            <button onclick="toggleAmbient('lofi')" id="amb-lofi" class="ambient-btn py-3 px-3 rounded-2xl bg-black/5 dark:bg-white/5 hover:bg-ios-purple/15 border border-transparent transition flex flex-col items-center gap-1">
+                                <i class="ph-fill ph-vinyl-record text-xl text-ios-purple"></i>
+                                <span class="text-xs font-bold">ترددات Lo-Fi</span>
+                            </button>
+                            <button onclick="toggleAmbient('white')" id="amb-white" class="ambient-btn py-3 px-3 rounded-2xl bg-black/5 dark:bg-white/5 hover:bg-ios-orange/15 border border-transparent transition flex flex-col items-center gap-1">
+                                <i class="ph-fill ph-coffee text-xl text-ios-orange"></i>
+                                <span class="text-xs font-bold">ضوضاء تركيز</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Moodle Assignments & Deadlines Tracker -->
+                <div class="lg:col-span-5 apple-card rounded-3xl p-6 flex flex-col justify-between space-y-5">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-lg font-black flex items-center gap-2">
+                                    <i class="ph-fill ph-graduation-cap text-ios-orange"></i>
+                                    <span>متابعة تكليفات Moodle والمهام</span>
+                                </h3>
+                                <p class="text-xs opacity-70">إدارة الكويزات، الأسايمنت، ومهام يوم الخميس.</p>
+                            </div>
+                        </div>
+
+                        <!-- Add New Moodle Task Form -->
+                        <div class="bg-black/5 dark:bg-white/5 p-3 rounded-2xl space-y-2.5 mb-4">
+                            <input id="moodle-task-input" type="text" placeholder="أضف واجب أو كويز جديد (مثال: أسايمنت العلوم العسكرية)..." class="w-full bg-transparent text-xs sm:text-sm font-medium outline-none px-2 py-1">
+                            <div class="flex items-center justify-between gap-2">
+                                <select id="moodle-course-input" class="bg-white/60 dark:bg-black/40 text-xs rounded-xl px-2.5 py-1.5 outline-none font-bold">
+                                    <option value="العلوم العسكرية">العلوم العسكرية</option>
+                                    <option value="برمجة بايثون">برمجة بايثون</option>
+                                    <option value="نمذجة نظم البرمجيات">نمذجة نظم البرمجيات</option>
+                                    <option value="تنظيم وعمارة">تنظيم وعمارة</option>
+                                    <option value="برمجة مرئية">برمجة مرئية</option>
+                                    <option value="القيادة / مهارات">القيادة / مهارات</option>
+                                </select>
+                                <input id="moodle-due-input" type="text" placeholder="الموعد (مثال: الخميس 11:59م)" class="bg-white/60 dark:bg-black/40 text-xs rounded-xl px-2.5 py-1.5 outline-none w-36">
+                                <button onclick="addMoodleTask()" class="px-4 py-1.5 rounded-xl bg-ios-blue text-white text-xs font-bold hover:opacity-90 transition shrink-0">
+                                    + إضافة
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Moodle Tasks List -->
+                        <div id="moodle-tasks-list" class="space-y-2.5 max-h-80 overflow-y-auto pr-1">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Quick Portal Info Box -->
+                    <div class="p-4 rounded-2xl bg-gradient-to-r from-ios-orange/15 via-ios-pink/15 to-ios-purple/15 border border-white/10 flex items-center justify-between">
+                        <div class="text-xs space-y-0.5">
+                            <div class="font-bold">تذكير يوم الخميس الذكي 📌</div>
+                            <div class="opacity-75">محاضرة بايثون (2:00 - 3:00) + تسليم أسايمنت العلوم العسكرية على Moodle.</div>
+                        </div>
+                        <i class="ph-fill ph-bell-ringing text-2xl text-ios-orange shrink-0"></i>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==========================================
+         QUICK NOTES & CODE MODAL (نافذة الملاحظات السريعة)
+    =========================================== -->
+    <div id="notes-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-md">
+        <div class="apple-glass rounded-3xl max-w-lg w-full p-6 border border-white/20 shadow-2xl space-y-4 animate-[pageFadeIn_0.25s_ease]">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="w-9 h-9 rounded-xl bg-ios-orange/20 text-ios-orange flex items-center justify-center text-lg">
+                        <i class="ph-fill ph-note-pencil"></i>
+                    </div>
+                    <div>
+                        <h3 id="notes-modal-title" class="text-base font-black">ملاحظات وأكواد المساق</h3>
+                        <p class="text-[11px] opacity-60">يتم الحفظ تلقائياً في ذاكرة المتصفح (localStorage)</p>
+                    </div>
+                </div>
+                <button onclick="closeNotesModal()" class="w-8 h-8 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center hover:bg-ios-red hover:text-white transition">
+                    <i class="ph-bold ph-x text-sm"></i>
+                </button>
+            </div>
+
+            <textarea id="notes-textarea" rows="8" placeholder="اكتب ملخص المحاضرة، أهم النقاط، أو أكواد بايثون/برمجة مرئية هنا..." class="w-full rounded-2xl p-4 bg-black/5 dark:bg-black/40 border border-black/10 dark:border-white/10 text-xs sm:text-sm font-mono outline-none focus:border-ios-blue leading-relaxed"></textarea>
+
+            <div class="flex items-center justify-between">
+                <span id="notes-saved-badge" class="text-xs text-ios-green font-bold opacity-0 transition-opacity">✓ تم الحفظ تلقائياً</span>
+                <div class="flex items-center gap-2">
+                    <button onclick="copyNoteContent()" class="px-4 py-2 rounded-xl bg-black/10 dark:bg-white/10 text-xs font-bold hover:opacity-80 transition">
+                        نسخ النص
+                    </button>
+                    <button onclick="saveAndCloseNotes()" class="px-5 py-2 rounded-xl bg-ios-blue text-white text-xs font-bold shadow-md hover:opacity-90 transition">
+                        حفظ وإغلاق
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         ONLINE LINK CONFIGURE MODAL (إعداد رابط المحاضرة)
+    =========================================== -->
+    <div id="link-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-md">
+        <div class="apple-glass rounded-3xl max-w-md w-full p-6 border border-white/20 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between">
+                <h3 id="link-modal-title" class="text-base font-black">رابط المحاضرة الأونلاين</h3>
+                <button onclick="closeLinkModal()" class="w-8 h-8 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center">
+                    <i class="ph-bold ph-x text-sm"></i>
+                </button>
+            </div>
+            <p class="text-xs opacity-75">ضع رابط Microsoft Teams أو Zoom أو Moodle الخاص بهذه المادة للانضمام مستقبلاً بضغطة زر واحدة:</p>
+            <input id="link-modal-input" type="url" dir="ltr" placeholder="https://teams.microsoft.com/..." class="w-full rounded-xl p-3 bg-black/5 dark:bg-black/40 border border-black/10 dark:border-white/15 text-xs font-mono outline-none">
+            <div class="flex justify-end gap-2">
+                <button onclick="saveCourseLink()" class="px-5 py-2.5 rounded-xl bg-ios-blue text-white text-xs font-bold">حفظ وفتح الرابط</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         FLOATING macOS DOCK AT BOTTOM (شريط تطبيقات عائم)
+    =========================================== -->
+    <div class="fixed bottom-4 inset-x-0 z-40 flex justify-center px-3 pointer-events-none">
+        <div class="dock-container apple-glass pointer-events-auto rounded-3xl px-3 py-2 flex items-center gap-2 sm:gap-3 border border-white/25 shadow-2xl">
+            
+            <button onclick="switchPage('schedule')" title="الجدول الأسبوعي" class="dock-item group relative w-11 h-11 rounded-2xl bg-gradient-to-b from-ios-blue to-blue-600 text-white flex items-center justify-center shadow-md">
+                <i class="ph-fill ph-calendar text-xl"></i>
+                <span class="absolute -top-8 scale-0 group-hover:scale-100 transition bg-black/80 text-white text-[10px] px-2 py-0.5 rounded-md whitespace-nowrap">الجدول</span>
+            </button>
+
+            <button onclick="switchPage('tracker')" title="حلقات الإنجاز والمراجعة" class="dock-item group relative w-11 h-11 rounded-2xl bg-gradient-to-b from-ios-pink to-rose-600 text-white flex items-center justify-center shadow-md">
+                <i class="ph-fill ph-activity text-xl"></i>
+                <span class="absolute -top-8 scale-0 group-hover:scale-100 transition bg-black/80 text-white text-[10px] px-2 py-0.5 rounded-md whitespace-nowrap">الإنجاز</span>
+            </button>
+
+            <button onclick="switchPage('zen')" title="مؤقت بومودورو والتركيز" class="dock-item group relative w-11 h-11 rounded-2xl bg-gradient-to-b from-ios-indigo to-purple-700 text-white flex items-center justify-center shadow-md">
+                <i class="ph-fill ph-timer text-xl"></i>
+                <span class="absolute -top-8 scale-0 group-hover:scale-100 transition bg-black/80 text-white text-[10px] px-2 py-0.5 rounded-md whitespace-nowrap">وضع التركيز</span>
+            </button>
+
+            <div class="w-px h-7 bg-black/15 dark:bg-white/15 mx-0.5"></div>
+
+            <button onclick="openNotesModal('دفتر الملاحظات العام')" title="ملاحظات سريعة وأكواد" class="dock-item group relative w-11 h-11 rounded-2xl bg-gradient-to-b from-amber-400 to-ios-orange text-white flex items-center justify-center shadow-md">
+                <i class="ph-fill ph-notepad text-xl"></i>
+                <span class="absolute -top-8 scale-0 group-hover:scale-100 transition bg-black/80 text-white text-[10px] px-2 py-0.5 rounded-md whitespace-nowrap">الملاحظات</span>
+            </button>
+
+            <a href="https://moodle.org" target="_blank" rel="noopener noreferrer" onclick="playHaptic('light')" title="منصة المودل (Moodle)" class="dock-item group relative w-11 h-11 rounded-2xl bg-gradient-to-b from-orange-500 to-red-500 text-white flex items-center justify-center shadow-md">
+                <i class="ph-fill ph-graduation-cap text-xl"></i>
+                <span class="absolute -top-8 scale-0 group-hover:scale-100 transition bg-black/80 text-white text-[10px] px-2 py-0.5 rounded-md whitespace-nowrap">Moodle</span>
+            </a>
+
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" onclick="playHaptic('light')" title="مستودعات الأكواد والمشاريع" class="dock-item group relative w-11 h-11 rounded-2xl bg-gradient-to-b from-zinc-700 to-zinc-900 text-white flex items-center justify-center shadow-md">
+                <i class="ph-fill ph-github-logo text-xl"></i>
+                <span class="absolute -top-8 scale-0 group-hover:scale-100 transition bg-black/80 text-white text-[10px] px-2 py-0.5 rounded-md whitespace-nowrap">GitHub</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         APPLICATION JAVASCRIPT LOGIC
+    =========================================== -->
+    <script>
+        /* ==========================================
+           1. CORE DATA DEFINITIONS (البيانات الأكاديمية)
+        =========================================== */
+        const COURSES = [
+            {
+                id: 'sw_modeling',
+                name: 'نمذجة نظم البرمجيات',
+                mode: 'inperson',
+                room: 'مختبر الحاسوب',
+                color: '#007AFF',
+                icon: 'ph-TreeStructure',
+                days: ['sun', 'tue'],
+                start: 10.0,
+                end: 11.0,
+                timeLabel: '10:00 - 11:00 ص'
+            },
+            {
+                id: 'comp_arch',
+                name: 'تنظيم وعمارة الحاسوب',
+                mode: 'inperson',
+                room: 'قاعة 208 ل',
+                color: '#AF52DE',
+                icon: 'ph-cpu',
+                days: ['sun', 'tue'],
+                start: 11.0,
+                end: 12.0,
+                timeLabel: '11:00 - 12:00 ظ'
+            },
+            {
+                id: 'visual_prog',
+                name: 'برمجة مرئية',
+                mode: 'inperson',
+                room: 'قاعة 40 ب',
+                color: '#FF2D55',
+                icon: 'ph-layout',
+                days: ['sun', 'tue'],
+                start: 12.0,
+                end: 13.0,
+                timeLabel: '12:00 - 01:00 م'
+            },
+            {
+                id: 'lunch_break',
+                name: 'بريك الغداء والراحة ☕',
+                mode: 'break',
+                room: 'استراحة الحرم الجامعي',
+                color: '#FF9500',
+                icon: 'ph-coffee',
+                days: ['sun', 'tue'],
+                start: 13.0,
+                end: 14.0,
+                timeLabel: '01:00 - 02:00 م',
+                isBreak: true
+            },
+            {
+                id: 'python_prog',
+                name: 'برمجة بايثون',
+                mode: 'inperson',
+                room: 'قاعة 274 أ',
+                color: '#34C759',
+                icon: 'ph-code',
+                days: ['sun', 'tue', 'thu'],
+                start: 14.0,
+                end: 15.0,
+                timeLabel: '02:00 - 03:00 م'
+            },
+            {
+                id: 'military_sci',
+                name: 'العلوم العسكرية',
+                mode: 'online',
+                room: 'محاضرة أونلاين (عن بُعد)',
+                color: '#5856D6',
+                icon: 'ph-shield-star',
+                days: ['sun', 'tue'],
+                start: 16.5,
+                end: 17.5,
+                timeLabel: '04:30 - 05:30 م'
+            },
+            {
+                id: 'leadership',
+                name: 'القيادة والمسؤولية المجتمعية',
+                mode: 'online',
+                room: 'محاضرة أونلاين (الأحد)',
+                color: '#5AC8FA',
+                icon: 'ph-users-three',
+                days: ['sun'],
+                start: 17.5,
+                end: 18.5,
+                timeLabel: '05:30 - 06:30 م'
+            },
+            {
+                id: 'life_skills',
+                name: 'مهارات حياتية',
+                mode: 'online',
+                room: 'محاضرة أونلاين (الثلاثاء)',
+                color: '#FF9500',
+                icon: 'ph-sparkle',
+                days: ['tue'],
+                start: 17.5,
+                end: 18.5,
+                timeLabel: '05:30 - 06:30 م'
+            },
+            {
+                id: 'thu_moodle',
+                name: 'أسايمنت العلوم العسكرية ومتابعة Moodle',
+                mode: 'online',
+                room: 'منصة المودل (Moodle)',
+                color: '#FF2D55',
+                icon: 'ph-check-square-offset',
+                days: ['thu'],
+                start: 17.0,
+                end: 19.0,
+                timeLabel: 'مسائي مرن • متابعة وتسليم'
+            }
+        ];
+
+        const DAYS_META = [
+            { key: 'sun', name: 'الأحد', jsDay: 0, isOff: false, subtitle: 'يوم دراسي متكامل (وجاهي + أونلاين مسائي)' },
+            { key: 'mon', name: 'الإثنين', jsDay: 1, isOff: true, subtitle: 'عطلة هادئة OFF • يوم راحة ومراجعة ذاتية 🌿' },
+            { key: 'tue', name: 'الثلاثاء', jsDay: 2, isOff: false, subtitle: 'يوم دراسي متكامل (وجاهي + أونلاين مسائي)' },
+            { key: 'wed', name: 'الأربعاء', jsDay: 3, isOff: true, subtitle: 'عطلة هادئة OFF • استجمام وتحضير للمشاريع ☕' },
+            { key: 'thu', name: 'الخميس', jsDay: 4, isOff: false, subtitle: 'محاضرة بايثون وجاهي + أسايمنت العلوم العسكرية ومتابعة Moodle' }
+        ];
+
+        /* ==========================================
+           2. STATE & LOCAL STORAGE MANAGEMENT
+        =========================================== */
+        let appState = {
+            theme: localStorage.getItem('za_theme') || 'dark',
+            soundEnabled: localStorage.getItem('za_sound') !== 'false',
+            dayFilter: 'all',
+            modeFilter: 'all',
+            currentWeek: localStorage.getItem('za_week') || 'w1',
+            attendance: JSON.parse(localStorage.getItem('za_attendance') || '{}'),
+            checklists: JSON.parse(localStorage.getItem('za_checklists') || '{}'),
+            notes: JSON.parse(localStorage.getItem('za_notes') || '{}'),
+            links: JSON.parse(localStorage.getItem('za_links') || '{}'),
+            moodleTasks: JSON.parse(localStorage.getItem('za_moodle') || 'null') || [
+                { id: 1, title: 'حل وتسليم أسايمنت العلوم العسكرية الأسبوعي', course: 'العلوم العسكرية', due: 'الخميس 11:59 م', done: false },
+                { id: 2, title: 'مراجعة كود المختبر وتطبيق تمارين القوائم والدوال', course: 'برمجة بايثون', due: 'الثلاثاء 2:00 م', done: false },
+                { id: 3, title: 'رسم مخطط حالات الاستخدام (Use Case Diagram)', course: 'نمذجة نظم البرمجيات', due: 'الأحد 10:00 ص', done: true },
+                { id: 4, title: 'تجهيز واجهة المستخدم للتطبيق العملي', course: 'برمجة مرئية', due: 'الأحد 12:00 ظ', done: false }
+            ],
+            simDay: 'real',
+            simHour: 10.5
+        };
+
+        /* ==========================================
+           3. HAPTIC CLICK SOUND & WEB AUDIO ENGINE
+        =========================================== */
+        let audioCtx = null;
+        let ambientNodes = null;
+        let currentAmbientType = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContextClass();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function playHaptic(type = 'light') {
+            if (!appState.soundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                const now = ctx.currentTime;
+                if (type === 'light') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(520, now);
+                    osc.frequency.exponentialRampToValueAtTime(180, now + 0.035);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+                    osc.start(now);
+                    osc.stop(now + 0.04);
+                } else if (type === 'success') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(587.33, now); // D5
+                    osc.frequency.setValueAtTime(880, now + 0.08); // A5
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.26);
+                } else if (type === 'enter') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(330, now);
+                    osc.frequency.exponentialRampToValueAtTime(660, now + 0.18);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+                    osc.start(now);
+                    osc.stop(now + 0.22);
+                }
+            } catch (e) {
+                // Ignore audio context restrictions before user gesture
+            }
+        }
+
+        function toggleSound() {
+            appState.soundEnabled = !appState.soundEnabled;
+            localStorage.setItem('za_sound', appState.soundEnabled);
+            updateSoundUI();
+            if (appState.soundEnabled) playHaptic('light');
+        }
+
+        function updateSoundUI() {
+            const icon = document.getElementById('sound-icon');
+            if (appState.soundEnabled) {
+                icon.className = 'ph-fill ph-speaker-high text-base text-ios-blue';
+            } else {
+                icon.className = 'ph-fill ph-speaker-slash text-base text-ios-red';
+            }
+        }
+
+        /* ==========================================
+           4. THEME (DARK / LIGHT MODE)
+        =========================================== */
+        function applyTheme() {
+            const root = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (appState.theme === 'dark') {
+                root.classList.add('dark');
+                if (icon) icon.className = 'ph-fill ph-moon-stars text-base text-ios-orange';
+            } else {
+                root.classList.remove('dark');
+                if (icon) icon.className = 'ph-fill ph-sun-dim text-base text-ios-orange';
+            }
+        }
+
+        function toggleTheme() {
+            playHaptic('light');
+            appState.theme = appState.theme === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('za_theme', appState.theme);
+            applyTheme();
+        }
+
+        /* ==========================================
+           5. SPLASH SCREEN & NAVIGATION
+        =========================================== */
+        function enterDashboard() {
+            playHaptic('enter');
+            document.getElementById('splash-screen').classList.add('hidden-splash');
+        }
+
+        function switchPage(pageId) {
+            playHaptic('light');
+            ['schedule', 'tracker', 'zen'].forEach(id => {
+                const sec = document.getElementById('page-' + id);
+                const btn = document.getElementById('nav-' + id);
+                if (id === pageId) {
+                    sec.classList.remove('hidden');
+                    btn.classList.add('bg-ios-blue', 'text-white', 'shadow-sm');
+                    btn.classList.remove('opacity-75');
+                } else {
+                    sec.classList.add('hidden');
+                    btn.classList.remove('bg-ios-blue', 'text-white', 'shadow-sm');
+                    btn.classList.add('opacity-75');
+                }
+            });
+            if (pageId === 'tracker') {
+                renderTrackerPage();
+            }
+        }
+
+        /* ==========================================
+           6. DYNAMIC ISLAND & LIVE ACTIVITY ENGINE
+        =========================================== */
+        function toggleIslandExpand() {
+            playHaptic('light');
+            const exp = document.getElementById('island-expanded');
+            const chev = document.getElementById('island-chevron');
+            const island = document.getElementById('dynamic-island');
+            exp.classList.toggle('hidden');
+            island.classList.toggle('expanded');
+            chev.style.transform = exp.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+
+        function applyTimeSimulation() {
+            playHaptic('light');
+            const daySel = document.getElementById('sim-day').value;
+            const hourSel = document.getElementById('sim-hour');
+            appState.simDay = daySel;
+            if (daySel === 'real') {
+                hourSel.classList.add('hidden');
+            } else {
+                hourSel.classList.remove('hidden');
+                appState.simHour = parseFloat(hourSel.value);
+            }
+            updateLiveStatus();
+        }
+
+        function getCurrentTimeState() {
+            const now = new Date();
+            if (appState.simDay === 'real') {
+                const dayIndex = now.getDay(); // 0=Sun, 1=Mon, ...
+                const floatHour = now.getHours() + (now.getMinutes() / 60);
+                return { dayIndex, floatHour, realDate: now };
+            } else {
+                const dayIndex = parseInt(appState.simDay, 10);
+                const floatHour = parseFloat(document.getElementById('sim-hour').value);
+                return { dayIndex, floatHour, realDate: now };
+            }
+        }
+
+        function formatFloatHour(fh) {
+            const totalMinutes = Math.round(fh * 60);
+            const h24 = Math.floor(totalMinutes / 60);
+            const mins = totalMinutes % 60;
+            const period = h24 >= 12 ? 'م' : 'ص';
+            const h12 = h24 % 12 === 0 ? 12 : h24 % 12;
+            return `${h12}:${mins.toString().padStart(2, '0')} ${period}`;
+        }
+
+        function updateLiveStatus() {
+            const { dayIndex, floatHour, realDate } = getCurrentTimeState();
+            const dayKeyMap = { 0: 'sun', 1: 'mon', 2: 'tue', 3: 'wed', 4: 'thu', 5: 'fri', 6: 'sat' };
+            const dayNameMap = { 0: 'الأحد', 1: 'الإثنين', 2: 'الثلاثاء', 3: 'الأربعاء', 4: 'الخميس', 5: 'الجمعة', 6: 'السبت' };
+            const currentDayKey = dayKeyMap[dayIndex];
+
+            // Clocks
+            const timeStr = realDate.toLocaleTimeString('ar-JO', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const shortTime = realDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+            document.getElementById('island-live-clock').textContent = timeStr;
+            document.getElementById('splash-clock').textContent = shortTime;
+            document.getElementById('splash-day').textContent = `يوم ${dayNameMap[dayIndex]}`;
+
+            const islandTitle = document.getElementById('island-title');
+            const islandBadge = document.getElementById('island-badge');
+            const islandProgress = document.getElementById('island-progress');
+            const islandSub = document.getElementById('island-subdetail');
+            const islandDot = document.getElementById('island-dot');
+
+            // Next Lecture Banner Elements
+            const nextLabel = document.getElementById('next-card-label');
+            const nextTitle = document.getElementById('next-card-title');
+            const nextMeta = document.getElementById('next-card-meta');
+            const nextAction = document.getElementById('next-card-action');
+
+            // Check if OFF day (Mon, Wed, Fri, Sat)
+            if (['mon', 'wed', 'fri', 'sat'].includes(currentDayKey)) {
+                islandDot.className = 'w-2.5 h-2.5 rounded-full bg-ios-teal shrink-0';
+                islandTitle.textContent = `إجازة سعيدة (${dayNameMap[dayIndex]}) • يوم راحة واستجمام 🌸`;
+                islandBadge.textContent = 'OFF DAY';
+                islandProgress.style.width = '100%';
+                islandSub.textContent = 'لا توجد محاضرات مجدولة اليوم. وقت مثالي للمراجعة الذاتية والراحة.';
+
+                nextLabel.textContent = `حالة اليوم (${dayNameMap[dayIndex]})`;
+                nextTitle.textContent = 'عطلة أكاديمية هادئة (OFF) ✨';
+                nextMeta.innerHTML = `<span><i class="ph-fill ph-sparkle ml-1 text-ios-teal"></i>استمتع بوقتك أو راجع ملخصات الأسبوع</span>`;
+                nextAction.innerHTML = `<button onclick="switchPage('tracker')" class="px-4 py-2.5 rounded-xl bg-ios-blue text-white text-xs font-bold">فتح متتبع المراجعة</button>`;
+                return;
+            }
+
+            // Get today's courses sorted by start time
+            const todaysCourses = COURSES.filter(c => c.days.includes(currentDayKey)).sort((a, b) => a.start - b.start);
+
+            // Check if currently inside a lecture or break
+            const activeCourse = todaysCourses.find(c => floatHour >= c.start && floatHour < c.end);
+            const upcomingCourse = todaysCourses.find(c => c.start > floatHour);
+
+            if (activeCourse) {
+                const elapsed = floatHour - activeCourse.start;
+                const duration = activeCourse.end - activeCourse.start;
+                const pct = Math.min(100, Math.max(5, Math.round((elapsed / duration) * 100)));
+                const remainingMins = Math.max(1, Math.round((activeCourse.end - floatHour) * 60));
+
+                islandDot.className = 'w-2.5 h-2.5 rounded-full bg-ios-green animate-ping shrink-0';
+                islandTitle.textContent = `${activeCourse.name} • ${activeCourse.room}`;
+                islandBadge.textContent = `متبقي ${remainingMins} د`;
+                islandProgress.style.width = `${pct}%`;
+                islandSub.textContent = `جاري الآن (${activeCourse.timeLabel}) — نسبة التقدم ${pct}%`;
+
+                nextLabel.textContent = 'المحاضرة الجارية الآن 🟢';
+                nextTitle.textContent = activeCourse.name;
+                nextMeta.innerHTML = `
+                    <span><i class="ph-fill ph-clock ml-1 text-ios-blue"></i>${activeCourse.timeLabel}</span>
+                    <span><i class="ph-fill ph-map-pin ml-1 text-ios-pink"></i>${activeCourse.room}</span>
+                    <span class="text-ios-green font-bold">متبقي ${remainingMins} دقيقة</span>
+                `;
+                renderBannerAction(activeCourse, nextAction);
+            } else if (upcomingCourse) {
+                const waitMins = Math.round((upcomingCourse.start - floatHour) * 60);
+                const waitLabel = waitMins >= 60 ? `${Math.floor(waitMins / 60)} س و ${waitMins % 60} د` : `${waitMins} د`;
+
+                islandDot.className = 'w-2.5 h-2.5 rounded-full bg-ios-orange shrink-0';
+                islandTitle.textContent = `القادم: ${upcomingCourse.name} (${upcomingCourse.room})`;
+                islandBadge.textContent = `بعد ${waitLabel}`;
+                islandProgress.style.width = '30%';
+                islandSub.textContent = `تبدأ المحاضرة في تمام ${formatFloatHour(upcomingCourse.start)}`;
+
+                nextLabel.textContent = `المحاضرة القادمة (${dayNameMap[dayIndex]}) ⏳`;
+                nextTitle.textContent = upcomingCourse.name;
+                nextMeta.innerHTML = `
+                    <span><i class="ph-fill ph-clock ml-1 text-ios-blue"></i>${upcomingCourse.timeLabel}</span>
+                    <span><i class="ph-fill ph-map-pin ml-1 text-ios-pink"></i>${upcomingCourse.room}</span>
+                    <span class="text-ios-orange font-bold">تبدأ بعد ${waitLabel}</span>
+                `;
+                renderBannerAction(upcomingCourse, nextAction);
+            } else {
+                // Finished all classes for today
+                islandDot.className = 'w-2.5 h-2.5 rounded-full bg-ios-purple shrink-0';
+                islandTitle.textContent = `انتهت محاضرات ${dayNameMap[dayIndex]} بنجاح 🎉`;
+                islandBadge.textContent = 'مكتمل ✓';
+                islandProgress.style.width = '100%';
+                islandSub.textContent = 'أحسنت صنعاً اليوم! لا تنسَ تحديث حلقات الإنجاز.';
+
+                nextLabel.textContent = 'حالة الدوام اليومي';
+                nextTitle.textContent = 'اكتملت جميع محاضرات اليوم بنجاح 🌟';
+                nextMeta.innerHTML = `<span>تم إنهاء الجدول الدراسي ليوم ${dayNameMap[dayIndex]}، وقت الراحة أو المراجعة المسائية.</span>`;
+                nextAction.innerHTML = `<button onclick="switchPage('tracker')" class="px-4 py-2.5 rounded-xl bg-ios-green text-white text-xs font-bold">تحديث الإنجاز اليومي</button>`;
+            }
+        }
+
+        function renderBannerAction(course, container) {
+            if (course.mode === 'online') {
+                container.innerHTML = `
+                    <button onclick="joinOnlineLecture('${course.id}', '${course.name}')" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-ios-indigo to-ios-blue text-white text-xs font-bold shadow-md flex items-center gap-1.5">
+                        <i class="ph-bold ph-video-camera"></i>
+                        <span>اتصال سريع (One-Click Join)</span>
+                    </button>
+                `;
+            } else {
+                container.innerHTML = `
+                    <button onclick="openNotesModal('${course.name}')" class="px-4 py-2.5 rounded-xl bg-black/10 dark:bg-white/10 text-xs font-bold flex items-center gap-1.5">
+                        <i class="ph-bold ph-note-pencil"></i>
+                        <span>ملاحظات سريعة</span>
+                    </button>
+                `;
+            }
+        }
+
+        /* ==========================================
+           7. PAGE 1: SCHEDULE RENDERING & FILTERS
+        =========================================== */
+        function setDayFilter(day) {
+            playHaptic('light');
+            appState.dayFilter = day;
+            document.querySelectorAll('.day-pill').forEach(btn => {
+                if (btn.dataset.day === day) {
+                    btn.className = 'day-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-ios-blue text-white shrink-0 transition shadow-sm';
+                } else {
+                    btn.className = 'day-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-black/5 dark:bg-white/10 shrink-0 transition';
+                }
+            });
+            renderSchedule();
+        }
+
+        function setModeFilter(mode) {
+            playHaptic('light');
+            appState.modeFilter = mode;
+            document.querySelectorAll('.mode-pill').forEach(btn => {
+                if (btn.dataset.mode === mode) {
+                    btn.className = 'mode-pill px-3 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-white/15 shadow-sm transition';
+                } else {
+                    btn.className = 'mode-pill px-3 py-1.5 rounded-lg text-xs font-bold opacity-70 hover:opacity-100 transition';
+                }
+            });
+            renderSchedule();
+        }
+
+        function renderSchedule() {
+            const container = document.getElementById('schedule-container');
+            const daysToShow = appState.dayFilter === 'all'
+                ? DAYS_META
+                : DAYS_META.filter(d => d.key === appState.dayFilter);
+
+            let html = '';
+
+            daysToShow.forEach(dayObj => {
+                if (dayObj.isOff) {
+                    // Calm OFF Day Card (Monday & Wednesday)
+                    html += `
+                        <div class="apple-card rounded-3xl p-6 border border-ios-teal/30 relative overflow-hidden">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-14 h-14 rounded-2xl bg-ios-teal/15 text-ios-teal flex items-center justify-center text-3xl shrink-0">
+                                        <i class="ph-fill ph-palm-tree"></i>
+                                    </div>
+                                    <div>
+                                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-ios-teal/20 text-ios-teal text-[11px] font-extrabold mb-1">
+                                            <span>OFF DAY • عطلة رسمية هادئة</span>
+                                        </div>
+                                        <h3 class="text-xl font-black">يوم ${dayObj.name} — راحة واستجمام</h3>
+                                        <p class="text-xs opacity-75 mt-0.5">${dayObj.subtitle}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="switchPage('zen')" class="px-4 py-2.5 rounded-xl bg-black/5 dark:bg-white/10 text-xs font-bold hover:bg-ios-teal hover:text-white transition">
+                                        جلسة مراجعة هادئة
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Filter courses for this day
+                let dayCourses = COURSES.filter(c => c.days.includes(dayObj.key));
+
+                if (appState.modeFilter === 'inperson') {
+                    dayCourses = dayCourses.filter(c => c.mode === 'inperson');
+                } else if (appState.modeFilter === 'online') {
+                    dayCourses = dayCourses.filter(c => c.mode === 'online');
+                } else if (appState.modeFilter === 'rooms') {
+                    dayCourses = dayCourses.filter(c => c.mode === 'inperson' && !c.isBreak);
+                }
+
+                html += `
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between px-1">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-3 h-3 rounded-full bg-ios-blue"></span>
+                                <h3 class="text-lg sm:text-xl font-black">يوم ${dayObj.name}</h3>
+                                <span class="text-xs opacity-60 hidden sm:inline">— ${dayObj.subtitle}</span>
+                            </div>
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-black/5 dark:bg-white/10">${dayCourses.length} فقرات</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            ${dayCourses.map(course => renderCourseCard(course, dayObj.key)).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function renderCourseCard(course, dayKey) {
+            const isOnline = course.mode === 'online';
+            const isBreak = course.isBreak;
+
+            // Dynamic badge
+            let badgeHtml = '';
+            if (isBreak) {
+                badgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-ios-orange/20 text-ios-orange">استراحة الغداء ☕</span>`;
+            } else if (isOnline) {
+                badgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-ios-indigo/20 text-ios-indigo dark:text-ios-teal">أونلاين • Online</span>`;
+            } else {
+                badgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-ios-green/20 text-ios-green">وجاهي • ${course.room}</span>`;
+            }
+
+            return `
+                <div class="apple-card rounded-3xl p-5 flex flex-col justify-between gap-4 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-1.5 h-full" style="background:${course.color}"></div>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-black/5 dark:bg-white/10">${course.timeLabel}</span>
+                            ${badgeHtml}
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <div class="w-11 h-11 rounded-2xl flex items-center justify-center text-white text-xl shrink-0 shadow-md" style="background:${course.color}">
+                                <i class="ph-fill ${course.icon}"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-base font-extrabold leading-snug">${course.name}</h4>
+                                <p class="text-xs opacity-70 flex items-center gap-1 mt-1">
+                                    <i class="ph-fill ph-map-pin"></i>
+                                    <span>${course.room}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-black/5 dark:border-white/10 flex items-center justify-between gap-2">
+                        ${isOnline ? `
+                            <button onclick="joinOnlineLecture('${course.id}', '${course.name}')" class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-ios-blue to-ios-indigo text-white text-xs font-bold shadow-sm hover:opacity-95 active:scale-95 transition flex items-center justify-center gap-1.5">
+                                <i class="ph-bold ph-Broadcast"></i>
+                                <span>انضمام سريع (Join)</span>
+                            </button>
+                            <button onclick="openLinkConfig('${course.id}', '${course.name}')" title="تعديل رابط المحاضرة" class="p-2 rounded-xl bg-black/5 dark:bg-white/10 text-xs hover:bg-black/15 transition">
+                                <i class="ph-bold ph-gear"></i>
+                            </button>
+                        ` : isBreak ? `
+                            <span class="text-xs opacity-70 font-medium">وقت مستقطع لتجديد النشاط وتناول الغداء 🍽️</span>
+                        ` : `
+                            <button onclick="openNotesModal('${course.name}')" class="flex-1 py-2 px-3 rounded-xl bg-black/5 dark:bg-white/10 hover:bg-ios-blue hover:text-white text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                <i class="ph-bold ph-note-pencil"></i>
+                                <span>تدوين ملاحظات</span>
+                            </button>
+                        `}
+                    </div>
+                </div>
+            `;
+        }
+
+        /* ==========================================
+           8. ONE-CLICK JOIN & ICS CALENDAR EXPORT
+        =========================================== */
+        let activeLinkCourseId = null;
+
+        function joinOnlineLecture(courseId, courseName) {
+            playHaptic('light');
+            const savedUrl = appState.links[courseId];
+            if (savedUrl) {
+                window.open(savedUrl, '_blank', 'noopener,noreferrer');
+            } else {
+                openLinkConfig(courseId, courseName);
+            }
+        }
+
+        function openLinkConfig(courseId, courseName) {
+            playHaptic('light');
+            activeLinkCourseId = courseId;
+            document.getElementById('link-modal-title').textContent = `إعداد رابط: ${courseName}`;
+            document.getElementById('link-modal-input').value = appState.links[courseId] || 'https://teams.microsoft.com';
+            const modal = document.getElementById('link-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeLinkModal() {
+            const modal = document.getElementById('link-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function saveCourseLink() {
+            playHaptic('success');
+            const val = document.getElementById('link-modal-input').value.trim();
+            if (val && activeLinkCourseId) {
+                appState.links[activeLinkCourseId] = val;
+                localStorage.setItem('za_links', JSON.stringify(appState.links));
+                closeLinkModal();
+                window.open(val, '_blank', 'noopener,noreferrer');
+            }
+        }
+
+        function exportScheduleICS() {
+            playHaptic('success');
+            const lines = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//Zakaria & Aisha Academic OS//AR',
+                'CALSCALE:GREGORIAN',
+                'METHOD:PUBLISH'
+            ];
+
+            // Reference Sunday date for recurring weekly events
+            const dayCodeMap = { sun: 'SU', tue: 'TU', thu: 'TH' };
+
+            COURSES.filter(c => !c.isBreak).forEach(course => {
+                const byDay = course.days.map(d => dayCodeMap[d]).filter(Boolean).join(',');
+                const startHour = Math.floor(course.start);
+                const startMin = Math.round((course.start - startHour) * 60);
+                const endHour = Math.floor(course.end);
+                const endMin = Math.round((course.end - endHour) * 60);
+
+                const dtStart = `20250216T${String(startHour).padStart(2, '0')}${String(startMin).padStart(2, '0')}00`;
+                const dtEnd = `20250216T${String(endHour).padStart(2, '0')}${String(endMin).padStart(2, '0')}00`;
+
+                lines.push(
+                    'BEGIN:VEVENT',
+                    `UID:${course.id}@academic-os.local`,
+                    `SUMMARY:${course.name} (${course.room})`,
+                    `LOCATION:${course.room}`,
+                    `DESCRIPTION:الجدول الأكاديمي الذكي - زكريا وعائشة`,
+                    `DTSTART:${dtStart}`,
+                    `DTEND:${dtEnd}`,
+                    `RRULE:FREQ=WEEKLY;BYDAY=${byDay}`,
+                    'END:VEVENT'
+                );
+            });
+
+            lines.push('END:VCALENDAR');
+
+            const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Zakaria_Aisha_Schedule.ics';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        /* ==========================================
+           9. SMART ATTENDANCE TRACKER (حاسبة الغياب)
+        =========================================== */
+        function renderAttendanceTracker() {
+            const container = document.getElementById('attendance-grid');
+            const trackableCourses = COURSES.filter(c => !c.isBreak && c.id !== 'thu_moodle');
+            const maxAbsences = 6;
+
+            container.innerHTML = trackableCourses.map(c => {
+                const count = appState.attendance[c.id] || 0;
+                const pct = Math.min(100, Math.round((count / maxAbsences) * 100));
+                let statusBadge = `<span class="text-[11px] font-bold text-ios-green">وضع آمن ✓</span>`;
+                let barColor = 'bg-ios-green';
+
+                if (count >= 5) {
+                    statusBadge = `<span class="text-[11px] font-bold text-ios-red animate-pulse">خطر الحرمان ⚠️</span>`;
+                    barColor = 'bg-ios-red';
+                } else if (count >= 3) {
+                    statusBadge = `<span class="text-[11px] font-bold text-ios-orange">تنبيه غيابات ⚡</span>`;
+                    barColor = 'bg-ios-orange';
+                }
+
+                return `
+                    <div class="p-4 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 flex flex-col justify-between gap-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-extrabold truncate">${c.name}</span>
+                            ${statusBadge}
+                        </div>
+
+                        <div class="w-full bg-black/10 dark:bg-white/10 h-2 rounded-full overflow-hidden">
+                            <div class="${barColor} h-full transition-all duration-300" style="width:${pct}%"></div>
+                        </div>
+
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="opacity-70">الغيابات: <strong class="font-mono text-sm">${count}</strong> / ${maxAbsences}</span>
+                            <div class="flex items-center gap-1.5">
+                                <button onclick="updateAttendance('${c.id}', -1)" class="w-7 h-7 rounded-lg bg-black/10 dark:bg-white/10 font-bold hover:bg-ios-blue hover:text-white transition">-</button>
+                                <button onclick="updateAttendance('${c.id}', 1)" class="w-7 h-7 rounded-lg bg-black/10 dark:bg-white/10 font-bold hover:bg-ios-blue hover:text-white transition">+</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateAttendance(courseId, delta) {
+            playHaptic('light');
+            const current = appState.attendance[courseId] || 0;
+            appState.attendance[courseId] = Math.max(0, current + delta);
+            localStorage.setItem('za_attendance', JSON.stringify(appState.attendance));
+            renderAttendanceTracker();
+        }
+
+        function resetAttendance() {
+            playHaptic('light');
+            appState.attendance = {};
+            localStorage.setItem('za_attendance', JSON.stringify(appState.attendance));
+            renderAttendanceTracker();
+        }
+
+        /* ==========================================
+           10. PAGE 2: TRACKER, REMINDERS & ACTIVITY RINGS
+        =========================================== */
+        function changeTrackerWeek(weekKey) {
+            playHaptic('light');
+            appState.currentWeek = weekKey;
+            localStorage.setItem('za_week', weekKey);
+            renderTrackerPage();
+        }
+
+        function renderTrackerPage() {
+            document.getElementById('tracker-week-select').value = appState.currentWeek;
+            const academicCourses = COURSES.filter(c => !c.isBreak && c.id !== 'thu_moodle');
+            const grid = document.getElementById('tracker-courses-grid');
+            const miniContainer = document.getElementById('course-mini-rings');
+
+            let totalAttendSum = 0, totalReview = 0, totalHw = 0;
+            const totalPossible = academicCourses.length;
+
+            grid.innerHTML = academicCourses.map(course => {
+                const keyBase = `${appState.currentWeek}_${course.id}`;
+                const stAttend = !!appState.checklists[`${keyBase}_attend`];
+                const stSummary = !!appState.checklists[`${keyBase}_summary`];
+                const stReview = !!appState.checklists[`${keyBase}_review`];
+                const stHw = !!appState.checklists[`${keyBase}_hw`];
+
+                if (stAttend && stSummary) totalAttendSum++;
+                else if (stAttend || stSummary) totalAttendSum += 0.5;
+                if (stReview) totalReview++;
+                if (stHw) totalHw++;
+
+                const doneCount = [stAttend, stSummary, stReview, stHw].filter(Boolean).length;
+                const coursePct = Math.round((doneCount / 4) * 100);
+
+                return `
+                    <div class="apple-card rounded-3xl p-5 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-2xl flex items-center justify-center text-white text-lg shadow-sm" style="background:${course.color}">
+                                    <i class="ph-fill ${course.icon}"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-base font-black">${course.name}</h4>
+                                    <span class="text-[11px] opacity-60">${course.room} • ${course.timeLabel}</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-sm font-extrabold" style="color:${course.color}">${coursePct}%</span>
+                                <button onclick="openNotesModal('${course.name}')" class="p-2 rounded-xl bg-black/5 dark:bg-white/10 hover:bg-ios-blue hover:text-white transition" title="ملاحظات وأكواد المادة">
+                                    <i class="ph-bold ph-note-pencil text-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2.5 pt-1">
+                            ${renderCheckItem(`${keyBase}_attend`, 'حضور المحاضرة', stAttend)}
+                            ${renderCheckItem(`${keyBase}_summary`, 'تلخيص الأفكار', stSummary)}
+                            ${renderCheckItem(`${keyBase}_review`, 'مراجعة نهائية', stReview)}
+                            ${renderCheckItem(`${keyBase}_hw`, 'حل الواجبات', stHw)}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Mini course rings summary
+            miniContainer.innerHTML = academicCourses.slice(0, 4).map(c => {
+                const keyBase = `${appState.currentWeek}_${c.id}`;
+                const done = ['attend', 'summary', 'review', 'hw'].filter(t => appState.checklists[`${keyBase}_${t}`]).length;
+                const pct = Math.round((done / 4) * 100);
+                return `
+                    <div class="p-3 rounded-2xl bg-black/5 dark:bg-white/5 flex items-center justify-between">
+                        <span class="text-xs font-bold truncate ml-2">${c.name}</span>
+                        <span class="font-mono text-xs font-black px-2 py-0.5 rounded-lg bg-white/10" style="color:${c.color}">${pct}%</span>
+                    </div>
+                `;
+            }).join('');
+
+            // Update Apple Activity Rings SVG
+            const pct1 = Math.round((totalAttendSum / totalPossible) * 100);
+            const pct2 = Math.round((totalReview / totalPossible) * 100);
+            const pct3 = Math.round((totalHw / totalPossible) * 100);
+            const overall = Math.round((pct1 + pct2 + pct3) / 3);
+
+            document.getElementById('ring-stat-1').textContent = `${pct1}%`;
+            document.getElementById('ring-stat-2').textContent = `${pct2}%`;
+            document.getElementById('ring-stat-3').textContent = `${pct3}%`;
+            document.getElementById('overall-ring-pct').textContent = `${overall}%`;
+
+            setRingOffset('ring-outer', 351.8, pct1);
+            setRingOffset('ring-middle', 263.8, pct2);
+            setRingOffset('ring-inner', 175.9, pct3);
+        }
+
+        function renderCheckItem(key, label, checked) {
+            return `
+                <label class="flex items-center gap-2.5 p-2.5 rounded-2xl bg-black/5 dark:bg-white/5 cursor-pointer hover:bg-black/10 dark:hover:bg-white/10 transition select-none">
+                    <input type="checkbox" class="ios-checkbox" ${checked ? 'checked' : ''} onchange="toggleChecklistItem('${key}', this.checked)">
+                    <span class="text-xs font-bold ${checked ? 'line-through opacity-60' : ''}">${label}</span>
+                </label>
+            `;
+        }
+
+        function setRingOffset(id, circumference, pct) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const offset = circumference - (pct / 100) * circumference;
+            el.style.strokeDashoffset = offset;
+        }
+
+        function toggleChecklistItem(key, isChecked) {
+            playHaptic(isChecked ? 'success' : 'light');
+            appState.checklists[key] = isChecked;
+            localStorage.setItem('za_checklists', JSON.stringify(appState.checklists));
+            renderTrackerPage();
+            if (isChecked) {
+                launchConfetti();
+            }
+        }
+
+        /* ==========================================
+           11. QUICK NOTES MODAL
+        =========================================== */
+        let currentNotesSubject = '';
+
+        function openNotesModal(subjectName) {
+            playHaptic('light');
+            currentNotesSubject = subjectName;
+            document.getElementById('notes-modal-title').textContent = `ملاحظات وأكواد: ${subjectName}`;
+            document.getElementById('notes-textarea').value = appState.notes[subjectName] || '';
+            const modal = document.getElementById('notes-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeNotesModal() {
+            const modal = document.getElementById('notes-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function saveAndCloseNotes() {
+            playHaptic('success');
+            const val = document.getElementById('notes-textarea').value;
+            appState.notes[currentNotesSubject] = val;
+            localStorage.setItem('za_notes', JSON.stringify(appState.notes));
+            closeNotesModal();
+        }
+
+        // Auto-save note on typing
+        document.getElementById('notes-textarea').addEventListener('input', function () {
+            if (!currentNotesSubject) return;
+            appState.notes[currentNotesSubject] = this.value;
+            localStorage.setItem('za_notes', JSON.stringify(appState.notes));
+            const badge = document.getElementById('notes-saved-badge');
+            badge.style.opacity = '1';
+            clearTimeout(window._noteSaveTimer);
+            window._noteSaveTimer = setTimeout(() => { badge.style.opacity = '0'; }, 1500);
+        });
+
+        function copyNoteContent() {
+            playHaptic('light');
+            const textarea = document.getElementById('notes-textarea');
+            textarea.select();
+            document.execCommand('copy');
+        }
+
+        /* ==========================================
+           12. PAGE 3: POMODORO, AMBIENT AUDIO & MOODLE
+        =========================================== */
+        let pomoSeconds = 25 * 60;
+        let pomoInitialSeconds = 25 * 60;
+        let pomoInterval = null;
+        let pomoRunning = false;
+
+        function setPomodoroMode(mins, label) {
+            playHaptic('light');
+            pausePomodoro();
+            pomoInitialSeconds = mins * 60;
+            pomoSeconds = pomoInitialSeconds;
+            document.getElementById('pomo-status-label').textContent = label;
+            updatePomodoroDisplay();
+            [25, 5, 45].forEach(m => {
+                const btn = document.getElementById('pomo-' + m);
+                if (m === mins) {
+                    btn.className = 'px-3 py-1.5 rounded-lg bg-ios-blue text-white transition';
+                } else {
+                    btn.className = 'px-3 py-1.5 rounded-lg opacity-75 hover:opacity-100 transition';
+                }
+            });
+        }
+
+        function updatePomodoroDisplay() {
+            const m = Math.floor(pomoSeconds / 60).toString().padStart(2, '0');
+            const s = (pomoSeconds % 60).toString().padStart(2, '0');
+            document.getElementById('pomo-timer-display').textContent = `${m}:${s}`;
+        }
+
+        function togglePomodoro() {
+            playHaptic('light');
+            if (pomoRunning) {
+                pausePomodoro();
+            } else {
+                pomoRunning = true;
+                document.getElementById('pomo-btn-text').textContent = 'إيقاف مؤقت';
+                document.getElementById('pomo-play-icon').className = 'ph-fill ph-pause text-lg';
+                pomoInterval = setInterval(() => {
+                    if (pomoSeconds > 0) {
+                        pomoSeconds--;
+                        updatePomodoroDisplay();
+                    } else {
+                        pausePomodoro();
+                        playHaptic('success');
+                        launchConfetti();
+                    }
+                }, 1000);
+            }
+        }
+
+        function pausePomodoro() {
+            pomoRunning = false;
+            clearInterval(pomoInterval);
+            document.getElementById('pomo-btn-text').textContent = 'ابدأ الجلسة';
+            document.getElementById('pomo-play-icon').className = 'ph-fill ph-play text-lg';
+        }
+
+        function resetPomodoro() {
+            playHaptic('light');
+            pausePomodoro();
+            pomoSeconds = pomoInitialSeconds;
+            updatePomodoroDisplay();
+        }
+
+        // Synthesized Web Audio Ambient Sound Generator (100% self-contained)
+        function stopAmbient() {
+            if (ambientNodes) {
+                try {
+                    ambientNodes.forEach(n => {
+                        if (n.stop) n.stop();
+                        if (n.disconnect) n.disconnect();
+                    });
+                } catch (e) {}
+                ambientNodes = null;
+            }
+            currentAmbientType = null;
+            document.getElementById('ambient-status').textContent = 'متوقف';
+            document.querySelectorAll('.ambient-btn').forEach(b => b.classList.remove('border-ios-blue', 'bg-ios-blue/15'));
+        }
+
+        function toggleAmbient(type) {
+            playHaptic('light');
+            if (currentAmbientType === type) {
+                stopAmbient();
+                return;
+            }
+            stopAmbient();
+            currentAmbientType = type;
+
+            const ctx = getAudioContext();
+            ambientNodes = [];
+
+            if (type === 'rain' || type === 'white') {
+                // Generate soothing pink/brown noise buffer
+                const bufferSize = 2 * ctx.sampleRate;
+                const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                const output = noiseBuffer.getChannelData(0);
+                let lastOut = 0.0;
+                for (let i = 0; i < bufferSize; i++) {
+                    const white = Math.random() * 2 - 1;
+                    output[i] = (lastOut + (0.02 * white)) / 1.02;
+                    lastOut = output[i];
+                    output[i] *= (type === 'rain' ? 0.18 : 0.10);
+                }
+                const whiteNoise = ctx.createBufferSource();
+                whiteNoise.buffer = noiseBuffer;
+                whiteNoise.loop = true;
+
+                const filter = ctx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = type === 'rain' ? 950 : 1600;
+
+                whiteNoise.connect(filter);
+                filter.connect(ctx.destination);
+                whiteNoise.start(0);
+                ambientNodes.push(whiteNoise, filter);
+            } else if (type === 'lofi') {
+                // Warm harmonic chill drone chord (Fmaj7 warm pad)
+                const freqs = [174.61, 220.00, 261.63, 329.63];
+                freqs.forEach(f => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = f;
+                    gain.gain.value = 0.025;
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start();
+                    ambientNodes.push(osc, gain);
+                });
+            }
+
+            const labels = { rain: 'قيد التشغيل: مطر هادئ 🌧️', lofi: 'قيد التشغيل: ترددات Lo-Fi 🎶', white: 'قيد التشغيل: ضوضاء تركيز ☕' };
+            document.getElementById('ambient-status').textContent = labels[type];
+            document.getElementById('amb-' + type).classList.add('border-ios-blue', 'bg-ios-blue/15');
+        }
+
+        // Moodle Tasks Management
+        function renderMoodleTasks() {
+            const list = document.getElementById('moodle-tasks-list');
+            list.innerHTML = appState.moodleTasks.map(t => `
+                <div class="p-3.5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 flex items-center justify-between gap-3">
+                    <label class="flex items-center gap-3 cursor-pointer flex-1 min-w-0">
+                        <input type="checkbox" class="ios-checkbox shrink-0" ${t.done ? 'checked' : ''} onchange="toggleMoodleTask(${t.id})">
+                        <div class="min-w-0">
+                            <p class="text-xs sm:text-sm font-bold truncate ${t.done ? 'line-through opacity-50' : ''}">${t.title}</p>
+                            <div class="flex items-center gap-2 text-[11px] opacity-65 mt-0.5">
+                                <span class="text-ios-blue font-bold">${t.course}</span>
+                                <span>•</span>
+                                <span><i class="ph-fill ph-clock ml-0.5"></i>${t.due}</span>
+                            </div>
+                        </div>
+                    </label>
+                    <button onclick="deleteMoodleTask(${t.id})" class="text-xs opacity-50 hover:opacity-100 hover:text-ios-red p-1.5">
+                        <i class="ph-bold ph-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function addMoodleTask() {
+            const titleEl = document.getElementById('moodle-task-input');
+            const courseEl = document.getElementById('moodle-course-input');
+            const dueEl = document.getElementById('moodle-due-input');
+            const title = titleEl.value.trim();
+            if (!title) return;
+
+            playHaptic('success');
+            appState.moodleTasks.unshift({
+                id: Date.now(),
+                title,
+                course: courseEl.value,
+                due: dueEl.value.trim() || 'قريباً',
+                done: false
+            });
+            titleEl.value = '';
+            dueEl.value = '';
+            localStorage.setItem('za_moodle', JSON.stringify(appState.moodleTasks));
+            renderMoodleTasks();
+        }
+
+        function toggleMoodleTask(id) {
+            const item = appState.moodleTasks.find(t => t.id === id);
+            if (item) {
+                item.done = !item.done;
+                playHaptic(item.done ? 'success' : 'light');
+                if (item.done) launchConfetti();
+                localStorage.setItem('za_moodle', JSON.stringify(appState.moodleTasks));
+                renderMoodleTasks();
+            }
+        }
+
+        function deleteMoodleTask(id) {
+            playHaptic('light');
+            appState.moodleTasks = appState.moodleTasks.filter(t => t.id !== id);
+            localStorage.setItem('za_moodle', JSON.stringify(appState.moodleTasks));
+            renderMoodleTasks();
+        }
+
+        /* ==========================================
+           13. LIGHTWEIGHT CONFETTI CELEBRATION
+        =========================================== */
+        function launchConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const colors = ['#FF2D55', '#007AFF', '#34C759', '#FF9500', '#AF52DE', '#5AC8FA'];
+            const pieces = Array.from({ length: 48 }, () => ({
+                x: canvas.width / 2 + (Math.random() - 0.5) * 160,
+                y: canvas.height / 2,
+                vx: (Math.random() - 0.5) * 12,
+                vy: -Math.random() * 12 - 4,
+                size: Math.random() * 7 + 4,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rot: Math.random() * 360,
+                vrot: (Math.random() - 0.5) * 10
+            }));
+
+            let frame = 0;
+            function animate() {
+                frame++;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                pieces.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.35; // gravity
+                    p.rot += p.vrot;
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate((p.rot * Math.PI) / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                    ctx.restore();
+                });
+                if (frame < 75) {
+                    requestAnimationFrame(animate);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+            animate();
+        }
+
+        /* ==========================================
+           14. INITIALIZATION ON WINDOW LOAD
+        =========================================== */
+        window.onload = function () {
+            applyTheme();
+            updateSoundUI();
+            renderSchedule();
+            renderAttendanceTracker();
+            renderTrackerPage();
+            renderMoodleTasks();
+            updateLiveStatus();
+            setInterval(updateLiveStatus, 1000);
+        };
+    </script>
+</body>
+</html>
