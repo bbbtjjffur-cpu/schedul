@@ -192,14 +192,14 @@
         }
 
         .numpad-btn {
-            width: 70px;
-            height: 70px;
+            width: 72px;
+            height: 72px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             color: #ffffff;
@@ -207,13 +207,14 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.15s ease;
-            user-select: none;
+            pointer-events: auto !important;
+            touch-action: manipulation;
         }
         .numpad-btn:hover {
-            background: rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.25);
         }
         .numpad-btn:active {
-            background: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.5);
             transform: scale(0.92);
         }
 
@@ -230,6 +231,7 @@
             place-content: center;
             transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             background: rgba(255,255,255,0.08);
+            pointer-events: auto !important;
         }
         .ios-checkbox:checked {
             background: #34C759;
@@ -274,10 +276,10 @@
     <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
 
     <!-- 0. APPLE PASSCODE SECURITY SCREEN -->
-    <div id="lock-screen" class="fixed inset-0 z-[60] flex flex-col items-center justify-center p-6 text-center select-none"
-         style="background: radial-gradient(circle at center, rgba(16,16,24,0.88) 0%, rgba(5,5,8,0.98) 100%); backdrop-filter: blur(45px);">
+    <div id="lock-screen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center p-6 text-center"
+         style="background: radial-gradient(circle at center, rgba(16,16,24,0.92) 0%, rgba(5,5,8,0.98) 100%); backdrop-filter: blur(45px); -webkit-backdrop-filter: blur(45px);">
         
-        <div class="max-w-xs w-full flex flex-col items-center">
+        <div class="max-w-xs w-full flex flex-col items-center relative z-[101]">
             <!-- Padlock Icon -->
             <div id="lock-icon" class="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white text-2xl mb-4 shadow-lg">
                 <i class="ph-fill ph-lock-key"></i>
@@ -287,27 +289,27 @@
             <p id="lock-hint" class="text-xs text-white/60 mt-1 font-medium">أدخل رمز الدخول المصرح به</p>
 
             <!-- PIN Dots -->
-            <div id="pin-dots-container" class="flex items-center gap-4 my-7">
+            <div id="pin-dots-container" class="flex items-center gap-4 my-7" dir="ltr">
                 <div class="pin-dot" id="dot-0"></div>
                 <div class="pin-dot" id="dot-1"></div>
                 <div class="pin-dot" id="dot-2"></div>
                 <div class="pin-dot" id="dot-3"></div>
             </div>
 
-            <!-- Apple Numpad -->
-            <div class="grid grid-cols-3 gap-5 mb-6">
-                <button onclick="pressPin('1')" class="numpad-btn">1</button>
-                <button onclick="pressPin('2')" class="numpad-btn">2</button>
-                <button onclick="pressPin('3')" class="numpad-btn">3</button>
-                <button onclick="pressPin('4')" class="numpad-btn">4</button>
-                <button onclick="pressPin('5')" class="numpad-btn">5</button>
-                <button onclick="pressPin('6')" class="numpad-btn">6</button>
-                <button onclick="pressPin('7')" class="numpad-btn">7</button>
-                <button onclick="pressPin('8')" class="numpad-btn">8</button>
-                <button onclick="pressPin('9')" class="numpad-btn">9</button>
-                <div class="w-[70px] h-[70px]"></div>
-                <button onclick="pressPin('0')" class="numpad-btn">0</button>
-                <button onclick="deletePin()" class="numpad-btn text-lg"><i class="ph-bold ph-backspace"></i></button>
+            <!-- Apple Numpad (LTR Direction so 1 2 3 are natural) -->
+            <div class="grid grid-cols-3 gap-5 mb-6" dir="ltr">
+                <button type="button" onclick="pressPin('1')" class="numpad-btn">1</button>
+                <button type="button" onclick="pressPin('2')" class="numpad-btn">2</button>
+                <button type="button" onclick="pressPin('3')" class="numpad-btn">3</button>
+                <button type="button" onclick="pressPin('4')" class="numpad-btn">4</button>
+                <button type="button" onclick="pressPin('5')" class="numpad-btn">5</button>
+                <button type="button" onclick="pressPin('6')" class="numpad-btn">6</button>
+                <button type="button" onclick="pressPin('7')" class="numpad-btn">7</button>
+                <button type="button" onclick="pressPin('8')" class="numpad-btn">8</button>
+                <button type="button" onclick="pressPin('9')" class="numpad-btn">9</button>
+                <div class="w-[72px] h-[72px]"></div>
+                <button type="button" onclick="pressPin('0')" class="numpad-btn">0</button>
+                <button type="button" onclick="deletePin()" class="numpad-btn text-xl"><i class="ph-bold ph-backspace"></i></button>
             </div>
 
             <!-- Trust Device Checkbox -->
@@ -787,47 +789,49 @@
     <!-- JAVASCRIPT & SECURITY LOGIC -->
     <script>
         /* 1. PASSCODE SECURITY & DEVICE TRUST */
-        const MASTER_PASSCODE = "2026"; // الرمز السري المعتمد (يمكنك تغييره هنا)
-        const TRUST_TOKEN_KEY = "za_trusted_device_auth_v1";
+        const MASTER_PASSCODE = "2026";
+        const TRUST_TOKEN_KEY = "za_trusted_device_auth_v2";
         let enteredPin = "";
 
         function checkDeviceAuth() {
             const isTrusted = localStorage.getItem(TRUST_TOKEN_KEY);
+            const lock = document.getElementById('lock-screen');
             if (isTrusted === "authorized") {
-                // Device already trusted, bypass passcode
-                unlockScreenInstant();
+                if (lock) lock.style.display = 'none';
+                initFirebaseListener();
             } else {
-                // Show passcode screen
-                document.getElementById('lock-screen').style.display = 'flex';
+                if (lock) lock.style.display = 'flex';
             }
         }
 
-        function pressPin(digit) {
+        window.pressPin = function(digit) {
             if (enteredPin.length >= 4) return;
             playHaptic('light');
-            enteredPin += digit;
+            enteredPin += String(digit);
             updatePinDots();
 
             if (enteredPin.length === 4) {
-                setTimeout(verifyPasscode, 150);
+                setTimeout(verifyPasscode, 120);
             }
-        }
+        };
 
-        function deletePin() {
+        window.deletePin = function() {
             if (enteredPin.length > 0) {
                 playHaptic('light');
                 enteredPin = enteredPin.slice(0, -1);
                 updatePinDots();
             }
-        }
+        };
 
         function updatePinDots() {
             for (let i = 0; i < 4; i++) {
                 const dot = document.getElementById(`dot-${i}`);
-                if (i < enteredPin.length) {
-                    dot.classList.add('filled');
-                } else {
-                    dot.classList.remove('filled');
+                if (dot) {
+                    if (i < enteredPin.length) {
+                        dot.classList.add('filled');
+                    } else {
+                        dot.classList.remove('filled');
+                    }
                 }
             }
         }
@@ -841,44 +845,48 @@
                 }
                 unlockScreenInstant();
             } else {
-                // Passcode incorrect: shake and reset
                 playHaptic('enter');
                 const container = document.getElementById('pin-dots-container');
                 container.classList.add('shake-error');
-                document.getElementById('lock-hint').textContent = "الرمز غير صحيح، حاول مرة أخرى ❌";
-                document.getElementById('lock-hint').classList.add('text-ios-red');
+                const hint = document.getElementById('lock-hint');
+                hint.textContent = "الرمز غير صحيح، حاول مرة أخرى ❌";
+                hint.classList.add('text-ios-red');
 
                 setTimeout(() => {
                     container.classList.remove('shake-error');
                     enteredPin = "";
                     updatePinDots();
-                }, 500);
+                }, 450);
             }
         }
 
         function unlockScreenInstant() {
             const lock = document.getElementById('lock-screen');
-            lock.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            if (!lock) return;
+            lock.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
             lock.style.opacity = '0';
-            lock.style.transform = 'scale(1.08)';
+            lock.style.transform = 'scale(1.05)';
             setTimeout(() => {
                 lock.style.display = 'none';
-            }, 500);
-            initFirebaseListener(); // Only initialize cloud sync after authorization
+            }, 400);
+            initFirebaseListener();
         }
 
-        function lockAppManually() {
+        window.lockAppManually = function() {
             playHaptic('light');
             localStorage.removeItem(TRUST_TOKEN_KEY);
             location.reload();
-        }
+        };
 
-        /* Keyboard Support for Numpad */
+        /* Keyboard Support for PC/Mac/iPad Keyboards */
         window.addEventListener('keydown', (e) => {
             const lock = document.getElementById('lock-screen');
-            if (lock.style.display !== 'none' && !lock.classList.contains('hidden')) {
-                if (e.key >= '0' && e.key <= '9') pressPin(e.key);
-                else if (e.key === 'Backspace') deletePin();
+            if (lock && lock.style.display !== 'none') {
+                if (e.key >= '0' && e.key <= '9') {
+                    pressPin(e.key);
+                } else if (e.key === 'Backspace') {
+                    deletePin();
+                }
             }
         });
 
@@ -1022,19 +1030,21 @@
             } catch (e) {}
         }
 
-        function toggleSound() {
+        window.toggleSound = function() {
             appState.soundEnabled = !appState.soundEnabled;
             localStorage.setItem('za_sound', appState.soundEnabled);
             updateSoundUI();
             if (appState.soundEnabled) playHaptic('light');
-        }
+        };
 
         function updateSoundUI() {
             const icon = document.getElementById('sound-icon');
-            if (appState.soundEnabled) {
-                icon.className = 'ph-fill ph-speaker-high text-base text-ios-blue';
-            } else {
-                icon.className = 'ph-fill ph-speaker-slash text-base text-ios-red';
+            if (icon) {
+                if (appState.soundEnabled) {
+                    icon.className = 'ph-fill ph-speaker-high text-base text-ios-blue';
+                } else {
+                    icon.className = 'ph-fill ph-speaker-slash text-base text-ios-red';
+                }
             }
         }
 
@@ -1051,39 +1061,43 @@
             }
         }
 
-        function toggleTheme() {
+        window.toggleTheme = function() {
             playHaptic('light');
             appState.theme = appState.theme === 'dark' ? 'light' : 'dark';
             localStorage.setItem('za_theme', appState.theme);
             applyTheme();
-        }
+        };
 
         /* 7. NAVIGATION */
-        function enterDashboard() {
+        window.enterDashboard = function() {
             playHaptic('enter');
             document.getElementById('splash-screen').style.display = 'none';
-        }
+        };
 
-        function switchPage(pageId) {
+        window.switchPage = function(pageId) {
             playHaptic('light');
             ['schedule', 'tracker', 'zen'].forEach(id => {
                 const sec = document.getElementById('page-' + id);
                 const btn = document.getElementById('nav-' + id);
                 if (id === pageId) {
-                    sec.classList.remove('hidden');
-                    btn.classList.add('bg-ios-blue', 'text-white', 'shadow-sm');
-                    btn.classList.remove('opacity-75');
+                    if (sec) sec.classList.remove('hidden');
+                    if (btn) {
+                        btn.classList.add('bg-ios-blue', 'text-white', 'shadow-sm');
+                        btn.classList.remove('opacity-75');
+                    }
                 } else {
-                    sec.classList.add('hidden');
-                    btn.classList.remove('bg-ios-blue', 'text-white', 'shadow-sm');
-                    btn.classList.add('opacity-75');
+                    if (sec) sec.classList.add('hidden');
+                    if (btn) {
+                        btn.classList.remove('bg-ios-blue', 'text-white', 'shadow-sm');
+                        btn.classList.add('opacity-75');
+                    }
                 }
             });
             if (pageId === 'tracker') renderTrackerPage();
-        }
+        };
 
         /* 8. DYNAMIC ISLAND & CLOCK */
-        function toggleIslandExpand() {
+        window.toggleIslandExpand = function() {
             playHaptic('light');
             const exp = document.getElementById('island-expanded');
             const chev = document.getElementById('island-chevron');
@@ -1091,9 +1105,9 @@
             exp.classList.toggle('hidden');
             island.classList.toggle('expanded');
             chev.style.transform = exp.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
-        }
+        };
 
-        function applyTimeSimulation() {
+        window.applyTimeSimulation = function() {
             playHaptic('light');
             const daySel = document.getElementById('sim-day').value;
             const hourSel = document.getElementById('sim-hour');
@@ -1105,7 +1119,7 @@
                 appState.simHour = parseFloat(hourSel.value);
             }
             updateLiveStatus();
-        }
+        };
 
         function getCurrentTimeState() {
             const now = new Date();
@@ -1137,9 +1151,13 @@
 
             const timeStr = realDate.toLocaleTimeString('ar-JO', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             const shortTime = realDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-            document.getElementById('island-live-clock').textContent = timeStr;
-            document.getElementById('splash-clock').textContent = shortTime;
-            document.getElementById('splash-day').textContent = `يوم ${dayNameMap[dayIndex]}`;
+            
+            const liveClock = document.getElementById('island-live-clock');
+            const splashClock = document.getElementById('splash-clock');
+            const splashDay = document.getElementById('splash-day');
+            if (liveClock) liveClock.textContent = timeStr;
+            if (splashClock) splashClock.textContent = shortTime;
+            if (splashDay) splashDay.textContent = `يوم ${dayNameMap[dayIndex]}`;
 
             const islandTitle = document.getElementById('island-title');
             const islandBadge = document.getElementById('island-badge');
@@ -1152,16 +1170,18 @@
             const nextMeta = document.getElementById('next-card-meta');
             const nextAction = document.getElementById('next-card-action');
 
+            if (!islandTitle) return;
+
             if (['mon', 'wed', 'fri', 'sat'].includes(currentDayKey)) {
                 islandDot.className = 'w-2.5 h-2.5 rounded-full bg-ios-teal shrink-0';
                 islandTitle.textContent = `إجازة سعيدة (${dayNameMap[dayIndex]}) • يوم راحة واستجمام 🌸`;
                 islandBadge.textContent = 'OFF DAY';
                 islandProgress.style.width = '100%';
                 islandSub.textContent = 'لا توجد محاضرات مجدولة اليوم.';
-                nextLabel.textContent = `حالة اليوم (${dayNameMap[dayIndex]})`;
-                nextTitle.textContent = 'عطلة أكاديمية هادئة (OFF) ✨';
-                nextMeta.innerHTML = `<span><i class="ph-fill ph-sparkle ml-1 text-ios-teal"></i>استمتع بوقتك أو راجع ملخصات الأسبوع</span>`;
-                nextAction.innerHTML = `<button onclick="switchPage('tracker')" class="px-4 py-2.5 rounded-xl bg-ios-blue text-white text-xs font-bold">متتبع المراجعة</button>`;
+                if (nextLabel) nextLabel.textContent = `حالة اليوم (${dayNameMap[dayIndex]})`;
+                if (nextTitle) nextTitle.textContent = 'عطلة أكاديمية هادئة (OFF) ✨';
+                if (nextMeta) nextMeta.innerHTML = `<span><i class="ph-fill ph-sparkle ml-1 text-ios-teal"></i>استمتع بوقتك أو راجع ملخصات الأسبوع</span>`;
+                if (nextAction) nextAction.innerHTML = `<button onclick="switchPage('tracker')" class="px-4 py-2.5 rounded-xl bg-ios-blue text-white text-xs font-bold">متتبع المراجعة</button>`;
                 return;
             }
 
@@ -1181,14 +1201,14 @@
                 islandProgress.style.width = `${pct}%`;
                 islandSub.textContent = `جاري الآن (${activeCourse.timeLabel}) — نسبة التقدم ${pct}%`;
 
-                nextLabel.textContent = 'المحاضرة الجارية الآن 🟢';
-                nextTitle.textContent = activeCourse.name;
-                nextMeta.innerHTML = `
+                if (nextLabel) nextLabel.textContent = 'المحاضرة الجارية الآن 🟢';
+                if (nextTitle) nextTitle.textContent = activeCourse.name;
+                if (nextMeta) nextMeta.innerHTML = `
                     <span><i class="ph-fill ph-clock ml-1 text-ios-blue"></i>${activeCourse.timeLabel}</span>
                     <span><i class="ph-fill ph-map-pin ml-1 text-ios-pink"></i>${activeCourse.room}</span>
                     <span class="text-ios-green font-bold">متبقي ${remainingMins} دقيقة</span>
                 `;
-                renderBannerAction(activeCourse, nextAction);
+                if (nextAction) renderBannerAction(activeCourse, nextAction);
             } else if (upcomingCourse) {
                 const waitMins = Math.round((upcomingCourse.start - floatHour) * 60);
                 const waitLabel = waitMins >= 60 ? `${Math.floor(waitMins / 60)} س و ${waitMins % 60} د` : `${waitMins} د`;
@@ -1199,24 +1219,24 @@
                 islandProgress.style.width = '30%';
                 islandSub.textContent = `تبدأ المحاضرة في تمام ${formatFloatHour(upcomingCourse.start)}`;
 
-                nextLabel.textContent = `المحاضرة القادمة (${dayNameMap[dayIndex]}) ⏳`;
-                nextTitle.textContent = upcomingCourse.name;
-                nextMeta.innerHTML = `
+                if (nextLabel) nextLabel.textContent = `المحاضرة القادمة (${dayNameMap[dayIndex]}) ⏳`;
+                if (nextTitle) nextTitle.textContent = upcomingCourse.name;
+                if (nextMeta) nextMeta.innerHTML = `
                     <span><i class="ph-fill ph-clock ml-1 text-ios-blue"></i>${upcomingCourse.timeLabel}</span>
                     <span><i class="ph-fill ph-map-pin ml-1 text-ios-pink"></i>${upcomingCourse.room}</span>
                     <span class="text-ios-orange font-bold">تبدأ بعد ${waitLabel}</span>
                 `;
-                renderBannerAction(upcomingCourse, nextAction);
+                if (nextAction) renderBannerAction(upcomingCourse, nextAction);
             } else {
                 islandDot.className = 'w-2.5 h-2.5 rounded-full bg-ios-purple shrink-0';
                 islandTitle.textContent = `انتهت محاضرات ${dayNameMap[dayIndex]} بنجاح 🎉`;
                 islandBadge.textContent = 'مكتمل ✓';
                 islandProgress.style.width = '100%';
                 islandSub.textContent = 'أحسنت صنعاً اليوم!';
-                nextLabel.textContent = 'حالة الدوام اليومي';
-                nextTitle.textContent = 'اكتملت جميع محاضرات اليوم بنجاح 🌟';
-                nextMeta.innerHTML = `<span>تم إنهاء جدول يوم ${dayNameMap[dayIndex]}.</span>`;
-                nextAction.innerHTML = `<button onclick="switchPage('tracker')" class="px-4 py-2.5 rounded-xl bg-ios-green text-white text-xs font-bold">تحديث الإنجاز اليومي</button>`;
+                if (nextLabel) nextLabel.textContent = 'حالة الدوام اليومي';
+                if (nextTitle) nextTitle.textContent = 'اكتملت جميع محاضرات اليوم بنجاح 🌟';
+                if (nextMeta) nextMeta.innerHTML = `<span>تم إنهاء جدول يوم ${dayNameMap[dayIndex]}.</span>`;
+                if (nextAction) nextAction.innerHTML = `<button onclick="switchPage('tracker')" class="px-4 py-2.5 rounded-xl bg-ios-green text-white text-xs font-bold">تحديث الإنجاز اليومي</button>`;
             }
         }
 
@@ -1239,7 +1259,7 @@
         }
 
         /* 9. SCHEDULE RENDERING */
-        function setDayFilter(day) {
+        window.setDayFilter = function(day) {
             playHaptic('light');
             appState.dayFilter = day;
             document.querySelectorAll('.day-pill').forEach(btn => {
@@ -1248,9 +1268,9 @@
                     : 'day-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-black/5 dark:bg-white/10 shrink-0 transition';
             });
             renderSchedule();
-        }
+        };
 
-        function setModeFilter(mode) {
+        window.setModeFilter = function(mode) {
             playHaptic('light');
             appState.modeFilter = mode;
             document.querySelectorAll('.mode-pill').forEach(btn => {
@@ -1259,10 +1279,11 @@
                     : 'mode-pill px-3 py-1.5 rounded-lg text-xs font-bold opacity-70 hover:opacity-100 transition';
             });
             renderSchedule();
-        }
+        };
 
         function renderSchedule() {
             const container = document.getElementById('schedule-container');
+            if (!container) return;
             const daysToShow = appState.dayFilter === 'all'
                 ? DAYS_META
                 : DAYS_META.filter(d => d.key === appState.dayFilter);
@@ -1410,28 +1431,28 @@
             }).join('');
         }
 
-        function updateAttendance(courseId, delta) {
+        window.updateAttendance = function(courseId, delta) {
             playHaptic('light');
             const current = appState.attendance[courseId] || 0;
             appState.attendance[courseId] = Math.max(0, current + delta);
             pushDataToCloud('attendance', appState.attendance);
             renderAttendanceTracker();
-        }
+        };
 
-        function resetAttendance() {
+        window.resetAttendance = function() {
             playHaptic('light');
             appState.attendance = {};
             pushDataToCloud('attendance', appState.attendance);
             renderAttendanceTracker();
-        }
+        };
 
         /* 11. TRACKER PAGE */
-        function changeTrackerWeek(weekKey) {
+        window.changeTrackerWeek = function(weekKey) {
             playHaptic('light');
             appState.currentWeek = weekKey;
             pushDataToCloud('currentWeek', weekKey);
             renderTrackerPage();
-        }
+        };
 
         function renderTrackerPage() {
             const selectEl = document.getElementById('tracker-week-select');
@@ -1488,27 +1509,33 @@
                 `;
             }).join('');
 
-            miniContainer.innerHTML = academicCourses.slice(0, 4).map(c => {
-                const keyBase = `${appState.currentWeek}_${c.id}`;
-                const done = ['attend', 'summary', 'review', 'hw'].filter(t => appState.checklists[`${keyBase}_${t}`]).length;
-                const pct = Math.round((done / 4) * 100);
-                return `
-                    <div class="p-3 rounded-2xl bg-black/5 dark:bg-white/5 flex items-center justify-between">
-                        <span class="text-xs font-bold truncate ml-2">${c.name}</span>
-                        <span class="font-mono text-xs font-black px-2 py-0.5 rounded-lg bg-white/10" style="color:${c.color}">${pct}%</span>
-                    </div>
-                `;
-            }).join('');
+            if (miniContainer) {
+                miniContainer.innerHTML = academicCourses.slice(0, 4).map(c => {
+                    const keyBase = `${appState.currentWeek}_${c.id}`;
+                    const done = ['attend', 'summary', 'review', 'hw'].filter(t => appState.checklists[`${keyBase}_${t}`]).length;
+                    const pct = Math.round((done / 4) * 100);
+                    return `
+                        <div class="p-3 rounded-2xl bg-black/5 dark:bg-white/5 flex items-center justify-between">
+                            <span class="text-xs font-bold truncate ml-2">${c.name}</span>
+                            <span class="font-mono text-xs font-black px-2 py-0.5 rounded-lg bg-white/10" style="color:${c.color}">${pct}%</span>
+                        </div>
+                    `;
+                }).join('');
+            }
 
             const pct1 = Math.round((totalAttendSum / totalPossible) * 100);
             const pct2 = Math.round((totalReview / totalPossible) * 100);
             const pct3 = Math.round((totalHw / totalPossible) * 100);
             const overall = Math.round((pct1 + pct2 + pct3) / 3);
 
-            document.getElementById('ring-stat-1').textContent = `${pct1}%`;
-            document.getElementById('ring-stat-2').textContent = `${pct2}%`;
-            document.getElementById('ring-stat-3').textContent = `${pct3}%`;
-            document.getElementById('overall-ring-pct').textContent = `${overall}%`;
+            const r1 = document.getElementById('ring-stat-1');
+            const r2 = document.getElementById('ring-stat-2');
+            const r3 = document.getElementById('ring-stat-3');
+            const ro = document.getElementById('overall-ring-pct');
+            if (r1) r1.textContent = `${pct1}%`;
+            if (r2) r2.textContent = `${pct2}%`;
+            if (r3) r3.textContent = `${pct3}%`;
+            if (ro) ro.textContent = `${overall}%`;
 
             setRingOffset('ring-outer', 351.8, pct1);
             setRingOffset('ring-middle', 263.8, pct2);
@@ -1531,17 +1558,17 @@
             el.style.strokeDashoffset = offset;
         }
 
-        function toggleChecklistItem(key, isChecked) {
+        window.toggleChecklistItem = function(key, isChecked) {
             playHaptic(isChecked ? 'success' : 'light');
             appState.checklists[key] = isChecked;
             pushDataToCloud('checklists', appState.checklists);
             renderTrackerPage();
             if (isChecked) launchConfetti();
-        }
+        };
 
         /* 12. QUICK NOTES */
         let currentNotesSubject = '';
-        function openNotesModal(subjectName) {
+        window.openNotesModal = function(subjectName) {
             playHaptic('light');
             currentNotesSubject = subjectName;
             document.getElementById('notes-modal-title').textContent = `ملاحظات وأكواد: ${subjectName}`;
@@ -1549,21 +1576,21 @@
             const modal = document.getElementById('notes-modal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-        }
+        };
 
-        function closeNotesModal() {
+        window.closeNotesModal = function() {
             const modal = document.getElementById('notes-modal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
-        }
+        };
 
-        function saveAndCloseNotes() {
+        window.saveAndCloseNotes = function() {
             playHaptic('success');
             const val = document.getElementById('notes-textarea').value;
             appState.notes[currentNotesSubject] = val;
             pushDataToCloud('notes', appState.notes);
             closeNotesModal();
-        }
+        };
 
         document.getElementById('notes-textarea').addEventListener('input', function () {
             if (!currentNotesSubject) return;
@@ -1572,28 +1599,30 @@
             window._cloudNoteTimer = setTimeout(() => {
                 pushDataToCloud('notes', appState.notes);
                 const badge = document.getElementById('notes-saved-badge');
-                badge.style.opacity = '1';
-                setTimeout(() => { badge.style.opacity = '0'; }, 1500);
+                if (badge) {
+                    badge.style.opacity = '1';
+                    setTimeout(() => { badge.style.opacity = '0'; }, 1500);
+                }
             }, 600);
         });
 
-        function copyNoteContent() {
+        window.copyNoteContent = function() {
             playHaptic('light');
             const textarea = document.getElementById('notes-textarea');
             textarea.select();
             document.execCommand('copy');
-        }
+        };
 
         /* 13. ONLINE LINKS */
         let activeLinkCourseId = null;
-        function joinOnlineLecture(courseId, courseName) {
+        window.joinOnlineLecture = function(courseId, courseName) {
             playHaptic('light');
             const savedUrl = appState.links[courseId];
             if (savedUrl) window.open(savedUrl, '_blank', 'noopener,noreferrer');
             else openLinkConfig(courseId, courseName);
-        }
+        };
 
-        function openLinkConfig(courseId, courseName) {
+        window.openLinkConfig = function(courseId, courseName) {
             playHaptic('light');
             activeLinkCourseId = courseId;
             document.getElementById('link-modal-title').textContent = `إعداد رابط: ${courseName}`;
@@ -1601,15 +1630,15 @@
             const modal = document.getElementById('link-modal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-        }
+        };
 
-        function closeLinkModal() {
+        window.closeLinkModal = function() {
             const modal = document.getElementById('link-modal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
-        }
+        };
 
-        function saveCourseLink() {
+        window.saveCourseLink = function() {
             playHaptic('success');
             const val = document.getElementById('link-modal-input').value.trim();
             if (val && activeLinkCourseId) {
@@ -1618,11 +1647,11 @@
                 closeLinkModal();
                 window.open(val, '_blank', 'noopener,noreferrer');
             }
-        }
+        };
 
         /* 14. POMODORO & AMBIENT */
         let pomoSeconds = 25 * 60, pomoInitialSeconds = 25 * 60, pomoInterval = null, pomoRunning = false;
-        function setPomodoroMode(mins, label) {
+        window.setPomodoroMode = function(mins, label) {
             playHaptic('light');
             pausePomodoro();
             pomoInitialSeconds = mins * 60;
@@ -1631,19 +1660,22 @@
             updatePomodoroDisplay();
             [25, 5, 45].forEach(m => {
                 const btn = document.getElementById('pomo-' + m);
-                btn.className = (m === mins)
-                    ? 'px-3 py-1.5 rounded-lg bg-ios-blue text-white transition'
-                    : 'px-3 py-1.5 rounded-lg opacity-75 hover:opacity-100 transition';
+                if (btn) {
+                    btn.className = (m === mins)
+                        ? 'px-3 py-1.5 rounded-lg bg-ios-blue text-white transition'
+                        : 'px-3 py-1.5 rounded-lg opacity-75 hover:opacity-100 transition';
+                }
             });
-        }
+        };
 
         function updatePomodoroDisplay() {
             const m = Math.floor(pomoSeconds / 60).toString().padStart(2, '0');
             const s = (pomoSeconds % 60).toString().padStart(2, '0');
-            document.getElementById('pomo-timer-display').textContent = `${m}:${s}`;
+            const disp = document.getElementById('pomo-timer-display');
+            if (disp) disp.textContent = `${m}:${s}`;
         }
 
-        function togglePomodoro() {
+        window.togglePomodoro = function() {
             playHaptic('light');
             if (pomoRunning) {
                 pausePomodoro();
@@ -1662,13 +1694,245 @@
                     }
                 }, 1000);
             }
-        }
+        };
 
         function pausePomodoro() {
             pomoRunning = false;
             clearInterval(pomoInterval);
-            document.getElementById('pomo-btn-text').textContent = 'ابدأ الجلسة';
-            document.getElementById('pomo-play-icon').className = 'ph-fill ph-play text-lg';
+            const btnText = document.getElementById('pomo-btn-text');
+            const playIcon = document.getElementById('pomo-play-icon');
+            if (btnText) btnText.textContent = 'ابدأ الجلسة';
+            if (playIcon) playIcon.className = 'ph-fill ph-play text-lg';
         }
 
-        function resetPomodoro
+        window.resetPomodoro = function() {
+            playHaptic('light');
+            pausePomodoro();
+            pomoSeconds = pomoInitialSeconds;
+            updatePomodoroDisplay();
+        };
+
+        function stopAmbient() {
+            if (ambientNodes) {
+                try {
+                    ambientNodes.forEach(n => {
+                        if (n.stop) n.stop();
+                        if (n.disconnect) n.disconnect();
+                    });
+                } catch (e) {}
+                ambientNodes = null;
+            }
+            currentAmbientType = null;
+            const stat = document.getElementById('ambient-status');
+            if (stat) stat.textContent = 'متوقف';
+            document.querySelectorAll('.ambient-btn').forEach(b => b.classList.remove('border-ios-blue', 'bg-ios-blue/15'));
+        }
+
+        window.toggleAmbient = function(type) {
+            playHaptic('light');
+            if (currentAmbientType === type) {
+                stopAmbient();
+                return;
+            }
+            stopAmbient();
+            currentAmbientType = type;
+            const ctx = getAudioContext();
+            ambientNodes = [];
+
+            if (type === 'rain' || type === 'white') {
+                const bufferSize = 2 * ctx.sampleRate;
+                const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                const output = noiseBuffer.getChannelData(0);
+                let lastOut = 0.0;
+                for (let i = 0; i < bufferSize; i++) {
+                    const white = Math.random() * 2 - 1;
+                    output[i] = (lastOut + (0.02 * white)) / 1.02;
+                    lastOut = output[i];
+                    output[i] *= (type === 'rain' ? 0.18 : 0.10);
+                }
+                const whiteNoise = ctx.createBufferSource();
+                whiteNoise.buffer = noiseBuffer;
+                whiteNoise.loop = true;
+                const filter = ctx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = type === 'rain' ? 950 : 1600;
+                whiteNoise.connect(filter);
+                filter.connect(ctx.destination);
+                whiteNoise.start(0);
+                ambientNodes.push(whiteNoise, filter);
+            } else if (type === 'lofi') {
+                const freqs = [174.61, 220.00, 261.63, 329.63];
+                freqs.forEach(f => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = f;
+                    gain.gain.value = 0.025;
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start();
+                    ambientNodes.push(osc, gain);
+                });
+            }
+
+            const labels = { rain: 'قيد التشغيل: مطر هادئ 🌧️', lofi: 'قيد التشغيل: ترددات Lo-Fi 🎶', white: 'قيد التشغيل: ضوضاء تركيز ☕' };
+            const stat = document.getElementById('ambient-status');
+            if (stat) stat.textContent = labels[type];
+            const btn = document.getElementById('amb-' + type);
+            if (btn) btn.classList.add('border-ios-blue', 'bg-ios-blue/15');
+        };
+
+        /* 15. MOODLE TASKS */
+        function renderMoodleTasks() {
+            const list = document.getElementById('moodle-tasks-list');
+            if (!list) return;
+            list.innerHTML = appState.moodleTasks.map(t => `
+                <div class="p-3.5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 flex items-center justify-between gap-3">
+                    <label class="flex items-center gap-3 cursor-pointer flex-1 min-w-0">
+                        <input type="checkbox" class="ios-checkbox shrink-0" ${t.done ? 'checked' : ''} onchange="toggleMoodleTask(${t.id})">
+                        <div class="min-w-0">
+                            <p class="text-xs sm:text-sm font-bold truncate ${t.done ? 'line-through opacity-50' : ''}">${t.title}</p>
+                            <div class="flex items-center gap-2 text-[11px] opacity-65 mt-0.5">
+                                <span class="text-ios-blue font-bold">${t.course}</span>
+                                <span>•</span>
+                                <span><i class="ph-fill ph-clock ml-0.5"></i>${t.due}</span>
+                            </div>
+                        </div>
+                    </label>
+                    <button onclick="deleteMoodleTask(${t.id})" class="text-xs opacity-50 hover:opacity-100 hover:text-ios-red p-1.5">
+                        <i class="ph-bold ph-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        window.addMoodleTask = function() {
+            const titleEl = document.getElementById('moodle-task-input');
+            const courseEl = document.getElementById('moodle-course-input');
+            const dueEl = document.getElementById('moodle-due-input');
+            const title = titleEl.value.trim();
+            if (!title) return;
+
+            playHaptic('success');
+            appState.moodleTasks.unshift({
+                id: Date.now(),
+                title,
+                course: courseEl.value,
+                due: dueEl.value.trim() || 'قريباً',
+                done: false
+            });
+            titleEl.value = '';
+            dueEl.value = '';
+            pushDataToCloud('moodleTasks', appState.moodleTasks);
+            renderMoodleTasks();
+        };
+
+        window.toggleMoodleTask = function(id) {
+            const item = appState.moodleTasks.find(t => t.id === id);
+            if (item) {
+                item.done = !item.done;
+                playHaptic(item.done ? 'success' : 'light');
+                if (item.done) launchConfetti();
+                pushDataToCloud('moodleTasks', appState.moodleTasks);
+                renderMoodleTasks();
+            }
+        };
+
+        window.deleteMoodleTask = function(id) {
+            playHaptic('light');
+            appState.moodleTasks = appState.moodleTasks.filter(t => t.id !== id);
+            pushDataToCloud('moodleTasks', appState.moodleTasks);
+            renderMoodleTasks();
+        };
+
+        /* 16. CONFETTI & EXPORT */
+        function launchConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const colors = ['#FF2D55', '#007AFF', '#34C759', '#FF9500', '#AF52DE', '#5AC8FA'];
+            const pieces = Array.from({ length: 48 }, () => ({
+                x: canvas.width / 2 + (Math.random() - 0.5) * 160,
+                y: canvas.height / 2,
+                vx: (Math.random() - 0.5) * 12,
+                vy: -Math.random() * 12 - 4,
+                size: Math.random() * 7 + 4,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rot: Math.random() * 360,
+                vrot: (Math.random() - 0.5) * 10
+            }));
+            let frame = 0;
+            function animate() {
+                frame++;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                pieces.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.35;
+                    p.rot += p.vrot;
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate((p.rot * Math.PI) / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                    ctx.restore();
+                });
+                if (frame < 75) requestAnimationFrame(animate);
+                else ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            animate();
+        }
+
+        window.exportScheduleICS = function() {
+            playHaptic('success');
+            const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Academic OS//AR', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'];
+            const dayCodeMap = { sun: 'SU', tue: 'TU', thu: 'TH' };
+            COURSES.filter(c => !c.isBreak).forEach(course => {
+                const byDay = course.days.map(d => dayCodeMap[d]).filter(Boolean).join(',');
+                const startHour = Math.floor(course.start);
+                const startMin = Math.round((course.start - startHour) * 60);
+                const endHour = Math.floor(course.end);
+                const endMin = Math.round((course.end - endHour) * 60);
+                const dtStart = `20250216T${String(startHour).padStart(2, '0')}${String(startMin).padStart(2, '0')}00`;
+                const dtEnd = `20250216T${String(endHour).padStart(2, '0')}${String(endMin).padStart(2, '0')}00`;
+                lines.push(
+                    'BEGIN:VEVENT',
+                    `UID:${course.id}@academic-os.local`,
+                    `SUMMARY:${course.name} (${course.room})`,
+                    `LOCATION:${course.room}`,
+                    `DESCRIPTION:الجدول الأكاديمي الذكي`,
+                    `DTSTART:${dtStart}`,
+                    `DTEND:${dtEnd}`,
+                    `RRULE:FREQ=WEEKLY;BYDAY=${byDay}`,
+                    'END:VEVENT'
+                );
+            });
+            lines.push('END:VCALENDAR');
+            const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Schedule.ics';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        };
+
+        /* 17. INITIALIZATION */
+        window.onload = function () {
+            checkDeviceAuth();
+            applyTheme();
+            updateSoundUI();
+            renderSchedule();
+            renderAttendanceTracker();
+            renderTrackerPage();
+            renderMoodleTasks();
+            updateLiveStatus();
+            setInterval(updateLiveStatus, 1000);
+        };
+    </script>
+</body>
+</html>
