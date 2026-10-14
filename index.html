@@ -6,12 +6,16 @@
     <title>Academic OS — زكريا ❤️ عائشة</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Tajawal & SF Pro Fallback -->
+    <!-- Google Fonts: Tajawal & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Phosphor Icons for crisp Apple-like iconography -->
+    <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Firebase App & Realtime Database SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <script>
         tailwind.config = {
@@ -71,7 +75,6 @@
             transition: background-color 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
         }
 
-        /* Dynamic Mesh Gradient Background */
         .mesh-bg {
             position: fixed;
             inset: 0;
@@ -122,7 +125,6 @@
             100% { transform: translate(35px, -30px) scale(0.92) rotate(-10deg); }
         }
 
-        /* Apple Frosted Glass */
         .apple-glass {
             background: var(--glass-bg);
             backdrop-filter: blur(28px) saturate(190%);
@@ -144,7 +146,6 @@
             transform: translateY(-3px);
         }
 
-        /* Dynamic Island */
         .dynamic-island {
             background: rgba(12, 12, 14, 0.92);
             backdrop-filter: blur(30px) saturate(200%);
@@ -161,7 +162,6 @@
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 25px rgba(10, 132, 255, 0.25);
         }
 
-        /* Heart Beat Animation */
         @keyframes heartPulse {
             0%, 100% { transform: scale(1); filter: drop-shadow(0 0 12px rgba(255, 45, 85, 0.6)); }
             15% { transform: scale(1.22); filter: drop-shadow(0 0 24px rgba(255, 45, 85, 0.95)); }
@@ -173,7 +173,6 @@
             animation: heartPulse 2.2s infinite ease-in-out;
         }
 
-        /* Splash Screen Transition */
         #splash-screen {
             transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.85s;
         }
@@ -184,7 +183,6 @@
             pointer-events: none;
         }
 
-        /* Custom Apple Checkbox */
         .ios-checkbox {
             appearance: none;
             -webkit-appearance: none;
@@ -211,7 +209,6 @@
             font-weight: 900;
         }
 
-        /* macOS Dock Effect */
         .dock-container {
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -226,14 +223,12 @@
             }
         }
 
-        /* Activity Rings SVG transitions */
         .ring-circle {
             transition: stroke-dashoffset 1s cubic-bezier(0.16, 1, 0.3, 1);
             transform: rotate(-90deg);
             transform-origin: 50% 50%;
         }
 
-        /* Page Transition Animation */
         .spa-page {
             animation: pageFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -242,7 +237,6 @@
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(142, 142, 147, 0.35); border-radius: 999px; }
@@ -261,23 +255,17 @@
     <!-- Confetti Celebration Canvas -->
     <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
 
-    <!-- ==========================================
-         1. SPLASH / HERO SCREEN (واجهة الترحيب السينمائية)
-    =========================================== -->
+    <!-- 1. SPLASH / HERO SCREEN -->
     <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 text-center select-none"
          style="background: radial-gradient(circle at center, rgba(20,20,28,0.82) 0%, rgba(7,7,12,0.96) 100%); backdrop-filter: blur(40px);">
-        
-        <!-- Subtle ambient glow behind card -->
         <div class="absolute w-80 h-80 rounded-full bg-gradient-to-tr from-ios-pink/30 via-ios-purple/25 to-ios-blue/30 blur-3xl animate-pulse pointer-events-none"></div>
 
         <div class="relative max-w-md w-full apple-glass rounded-[2.5rem] p-8 sm:p-10 border border-white/20 shadow-2xl flex flex-col items-center">
-            <!-- iOS Lockscreen-style Top Pill -->
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-medium text-white/80 mb-6">
                 <i class="ph-fill ph-sparkle text-ios-pink"></i>
-                <span>Academic OS • iOS 18 Design</span>
+                <span>Academic OS • Realtime Cloud Sync</span>
             </div>
 
-            <!-- Romantic Signature Header -->
             <div class="my-4">
                 <h1 class="text-4xl sm:text-5xl font-black tracking-tight text-white flex items-center justify-center gap-3">
                     <span>زكريا</span>
@@ -285,20 +273,18 @@
                     <span>عائشة</span>
                 </h1>
                 <p class="mt-4 text-sm sm:text-base text-white/70 font-normal leading-relaxed">
-                    مساحة أكاديمية ذكية مصممة بشغف، تجمع بين الفخامة، التنظيم، والإنجاز اليومي خطوة بخطوة.
+                    مساحة أكاديمية ذكية متصلة سحابياً، تجمع بين الفخامة، التنظيم، والمزامنة المباشرة خطوة بخطوة.
                 </p>
             </div>
 
-            <!-- Live Date & Time Preview on Splash -->
             <div class="w-full my-6 py-4 px-5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between text-white/90">
                 <div class="text-right">
                     <div id="splash-day" class="text-xs text-white/60 font-medium">اليوم</div>
-                    <div id="splash-status" class="text-sm font-bold text-ios-teal mt-0.5">جاهز للانطلاق</div>
+                    <div id="splash-status" class="text-sm font-bold text-ios-teal mt-0.5">سحابي لايف 🟢</div>
                 </div>
                 <div id="splash-clock" class="font-mono text-2xl font-semibold tracking-wider">10:00</div>
             </div>
 
-            <!-- Enter Dashboard CTA Button -->
             <button onclick="enterDashboard()" class="group relative w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-ios-blue via-ios-indigo to-ios-purple text-white font-bold text-base shadow-lg shadow-ios-blue/30 hover:shadow-ios-blue/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-3 overflow-hidden">
                 <span class="relative z-10">الدخول إلى لوحة التحكم</span>
                 <i class="ph-bold ph-arrow-left relative z-10 group-hover:-translate-x-1.5 transition-transform"></i>
@@ -306,21 +292,16 @@
             </button>
 
             <span class="mt-4 text-[11px] text-white/40 flex items-center gap-1.5">
-                <i class="ph-fill ph-speaker-high"></i>
-                تأثيرات صوتية تفاعلية مدمجة (Haptic Audio)
+                <i class="ph-fill ph-cloud-check text-ios-green"></i>
+                المزامنة السحابية اللحظية مفعلة (Firebase Live)
             </span>
         </div>
     </div>
 
-    <!-- ==========================================
-         2. TOP DYNAMIC ISLAND & FLOATING NAVBAR
-    =========================================== -->
+    <!-- 2. TOP DYNAMIC ISLAND & FLOATING NAVBAR -->
     <header class="sticky top-3 z-40 px-3 sm:px-6 max-w-7xl mx-auto">
         <div class="flex flex-col items-center gap-3">
-            
-            <!-- Dynamic Island Capsule (الجزيرة التفاعلية) -->
             <div id="dynamic-island" onclick="toggleIslandExpand()" class="dynamic-island rounded-[2rem] px-4 py-2.5 w-full max-w-md sm:max-w-lg transition-all">
-                <!-- Compact Row -->
                 <div class="flex items-center justify-between gap-3">
                     <div class="flex items-center gap-2.5 min-w-0">
                         <span id="island-dot" class="w-2.5 h-2.5 rounded-full bg-ios-green animate-ping shrink-0"></span>
@@ -333,18 +314,15 @@
                     </div>
                 </div>
 
-                <!-- Progress Bar inside Dynamic Island -->
                 <div class="w-full bg-white/15 h-1.5 rounded-full mt-2 overflow-hidden">
                     <div id="island-progress" class="bg-gradient-to-r from-ios-teal via-ios-blue to-ios-pink h-full rounded-full transition-all duration-700" style="width: 45%"></div>
                 </div>
 
-                <!-- Expanded Details (Shown when clicked) -->
                 <div id="island-expanded" class="hidden pt-3 mt-3 border-t border-white/15 text-xs text-white/80 space-y-2.5">
                     <div class="flex items-center justify-between">
                         <span id="island-subdetail" class="text-white/90 font-medium">تفاصيل المحاضرة الحالية</span>
                         <span id="island-live-clock" class="font-mono text-ios-teal font-semibold">00:00:00</span>
                     </div>
-                    <!-- Time Simulator for testing any day/hour easily -->
                     <div onclick="event.stopPropagation()" class="bg-white/10 rounded-xl p-2.5 flex flex-wrap items-center justify-between gap-2">
                         <div class="flex items-center gap-1.5 text-[11px] text-white/80">
                             <i class="ph-fill ph-clock-clockwise text-ios-orange"></i>
@@ -375,9 +353,7 @@
                 </div>
             </div>
 
-            <!-- Floating Frosted Navigation Bar -->
             <nav class="apple-glass rounded-2xl p-1.5 w-full flex items-center justify-between gap-2">
-                <!-- Brand Title -->
                 <div class="flex items-center gap-2.5 pr-3">
                     <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-ios-pink via-ios-purple to-ios-blue flex items-center justify-center text-white shadow-md">
                         <i class="ph-fill ph-heart text-lg"></i>
@@ -392,7 +368,6 @@
                     </div>
                 </div>
 
-                <!-- Navigation Tabs -->
                 <div class="flex items-center bg-black/5 dark:bg-white/5 p-1 rounded-xl gap-1 flex-1 sm:flex-initial justify-center">
                     <button onclick="switchPage('schedule')" id="nav-schedule" class="nav-btn flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all bg-ios-blue text-white shadow-sm">
                         <i class="ph-fill ph-calendar-blank text-base"></i>
@@ -408,8 +383,12 @@
                     </button>
                 </div>
 
-                <!-- Quick Controls (Sound & Theme) -->
                 <div class="flex items-center gap-1.5 pl-1">
+                    <!-- Cloud Sync Indicator -->
+                    <div id="sync-indicator" title="حالة الاتصال السحابي" class="px-2 py-1 rounded-xl bg-black/5 dark:bg-white/10 flex items-center gap-1.5 text-[11px] font-bold text-ios-green">
+                        <span class="w-2 h-2 rounded-full bg-ios-green animate-pulse"></span>
+                        <span class="hidden md:inline">متزامن</span>
+                    </div>
                     <button onclick="toggleSound()" id="sound-toggle-btn" title="الأصوات التفاعلية" class="w-9 h-9 rounded-xl flex items-center justify-center bg-black/5 dark:bg-white/10 hover:scale-105 active:scale-95 transition">
                         <i id="sound-icon" class="ph-fill ph-speaker-high text-base text-ios-blue"></i>
                     </button>
@@ -421,19 +400,12 @@
         </div>
     </header>
 
-    <!-- ==========================================
-         MAIN CONTENT CONTAINER
-    =========================================== -->
+    <!-- MAIN CONTENT CONTAINER -->
     <main class="max-w-7xl mx-auto px-3 sm:px-6 mt-6">
 
-        <!-- ==========================================
-             PAGE 1: الجدول الأسبوعي التفاعلي والذكي
-        =========================================== -->
+        <!-- PAGE 1: الجدول الأسبوعي -->
         <section id="page-schedule" class="spa-page space-y-6">
-            
-            <!-- Top Highlight Banner: Next Lecture & Export Actions -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <!-- Dynamic Next/Current Lecture Card -->
                 <div class="lg:col-span-2 apple-card rounded-3xl p-5 sm:p-6 relative overflow-hidden border-r-4 border-r-ios-blue">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div class="space-y-1.5">
@@ -448,14 +420,10 @@
                                 <span><i class="ph-fill ph-calendar ml-1 text-ios-purple"></i>الأحد والثلاثاء</span>
                             </p>
                         </div>
-
-                        <div id="next-card-action" class="flex items-center gap-2 shrink-0">
-                            <!-- Filled dynamically -->
-                        </div>
+                        <div id="next-card-action" class="flex items-center gap-2 shrink-0"></div>
                     </div>
                 </div>
 
-                <!-- Export .ICS & Summary Stats Card -->
                 <div class="apple-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between gap-4">
                     <div class="flex items-center justify-between">
                         <div>
@@ -466,7 +434,6 @@
                             <i class="ph-fill ph-calendar-plus"></i>
                         </div>
                     </div>
-
                     <button onclick="exportScheduleICS()" class="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-ios-blue to-ios-indigo text-white text-xs sm:text-sm font-bold shadow-md hover:opacity-95 active:scale-[0.98] transition flex items-center justify-center gap-2">
                         <i class="ph-bold ph-download-simple text-base"></i>
                         <span>تحميل ملف التقويم (.ics)</span>
@@ -474,9 +441,7 @@
                 </div>
             </div>
 
-            <!-- Filter Bar & Day Selector Pills -->
             <div class="apple-glass rounded-2xl p-3 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
-                <!-- Day Tabs -->
                 <div class="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 no-scrollbar">
                     <button onclick="setDayFilter('all')" data-day="all" class="day-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-ios-blue text-white shrink-0 transition">كل الأسبوع</button>
                     <button onclick="setDayFilter('sun')" data-day="sun" class="day-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-black/5 dark:bg-white/10 shrink-0 transition">الأحد</button>
@@ -486,7 +451,6 @@
                     <button onclick="setDayFilter('thu')" data-day="thu" class="day-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-black/5 dark:bg-white/10 shrink-0 transition">الخميس</button>
                 </div>
 
-                <!-- Mode Filter (الكل / وجاهي / أونلاين / القاعات) -->
                 <div class="flex items-center gap-1.5 bg-black/5 dark:bg-white/5 p-1 rounded-xl shrink-0">
                     <button onclick="setModeFilter('all')" data-mode="all" class="mode-pill px-3 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-white/15 shadow-sm transition">الكل</button>
                     <button onclick="setModeFilter('inperson')" data-mode="inperson" class="mode-pill px-3 py-1.5 rounded-lg text-xs font-bold opacity-70 hover:opacity-100 transition">وجاهي</button>
@@ -495,12 +459,8 @@
                 </div>
             </div>
 
-            <!-- Weekly Schedule Grid Container -->
-            <div id="schedule-container" class="space-y-6">
-                <!-- Rendered dynamically by JS -->
-            </div>
+            <div id="schedule-container" class="space-y-6"></div>
 
-            <!-- Smart Attendance Tracker (حاسبة الحضور والغياب الذكية) -->
             <div class="apple-card rounded-3xl p-5 sm:p-6">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5">
                     <div>
@@ -508,32 +468,24 @@
                             <i class="ph-fill ph-user-check text-ios-green"></i>
                             <span>حاسبة الحضور والغياب الذكية (Attendance Tracker)</span>
                         </h3>
-                        <p class="text-xs opacity-70 mt-0.5">تتبع عدد الغيابات لكل مساق مع تنبيه تلقائي قبل تجاوز الحد المسموح (6 غيابات كحد أقصى).</p>
+                        <p class="text-xs opacity-70 mt-0.5">المزامنة فورية بينك وبين عائشة، والتنبيه تلقائي قبل تجاوز الحد المسموح.</p>
                     </div>
                     <button onclick="resetAttendance()" class="self-start sm:self-auto px-3 py-1.5 rounded-xl bg-black/5 dark:bg-white/10 text-xs font-bold hover:bg-ios-red/20 hover:text-ios-red transition">
                         تصفير العدادات
                     </button>
                 </div>
-
-                <div id="attendance-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- Populated via JS -->
-                </div>
+                <div id="attendance-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </div>
         </section>
 
-        <!-- ==========================================
-             PAGE 2: متتبع الإنجاز والمراجعات اليومية
-        =========================================== -->
+        <!-- PAGE 2: متتبع الإنجاز -->
         <section id="page-tracker" class="spa-page hidden space-y-6">
-            
-            <!-- Apple Activity Rings Overview Header -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                <!-- Main Activity Rings Card -->
                 <div class="apple-card rounded-3xl p-6 flex items-center justify-between gap-6">
                     <div class="space-y-2">
                         <span class="px-3 py-1 rounded-full bg-ios-pink/15 text-ios-pink text-xs font-bold">حلقات النشاط الأكاديمي</span>
                         <h2 class="text-2xl font-black">مؤشر الإنجاز العام</h2>
-                        <p class="text-xs opacity-70 leading-relaxed">أغلق حلقاتك اليومية (الحضور، التلخيص، المراجعة، والواجبات) للاحتفال بإنجازك!</p>
+                        <p class="text-xs opacity-70 leading-relaxed">أغلق حلقاتك المشتركة للاحتفال بالإنجاز الأسبوعي!</p>
                         <div class="pt-2 space-y-1 text-xs font-bold">
                             <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-[#FF2D55]"></span><span>الحضور والتلخيص: <span id="ring-stat-1">0%</span></span></div>
                             <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-[#34C759]"></span><span>المراجعة النهائية: <span id="ring-stat-2">0%</span></span></div>
@@ -541,15 +493,12 @@
                         </div>
                     </div>
 
-                    <!-- Triple Concentric Apple Activity Rings SVG -->
                     <div class="relative w-36 h-36 shrink-0 flex items-center justify-center">
                         <svg class="w-full h-full" viewBox="0 0 140 140">
-                            <!-- Background Tracks -->
                             <circle cx="70" cy="70" r="56" stroke="rgba(255,45,85,0.18)" stroke-width="11" fill="none" />
                             <circle cx="70" cy="70" r="42" stroke="rgba(52,199,89,0.18)" stroke-width="11" fill="none" />
                             <circle cx="70" cy="70" r="28" stroke="rgba(0,122,255,0.18)" stroke-width="11" fill="none" />
                             
-                            <!-- Active Rings -->
                             <circle id="ring-outer" class="ring-circle" cx="70" cy="70" r="56" stroke="#FF2D55" stroke-width="11" stroke-linecap="round" fill="none" stroke-dasharray="351.8" stroke-dashoffset="351.8" />
                             <circle id="ring-middle" class="ring-circle" cx="70" cy="70" r="42" stroke="#34C759" stroke-width="11" stroke-linecap="round" fill="none" stroke-dasharray="263.8" stroke-dashoffset="263.8" />
                             <circle id="ring-inner" class="ring-circle" cx="70" cy="70" r="28" stroke="#007AFF" stroke-width="11" stroke-linecap="round" fill="none" stroke-dasharray="175.9" stroke-dashoffset="175.9" />
@@ -560,15 +509,14 @@
                     </div>
                 </div>
 
-                <!-- Week Selector & Celebration Trigger -->
                 <div class="lg:col-span-2 apple-card rounded-3xl p-6 flex flex-col justify-between gap-4">
                     <div class="flex flex-wrap items-center justify-between gap-3">
                         <div>
                             <h3 class="text-lg font-black flex items-center gap-2">
                                 <i class="ph-fill ph-list-checks text-ios-blue"></i>
-                                <span>سجل المتابعة الأسبوعي (Apple Reminders Style)</span>
+                                <span>سجل المتابعة المشترك (Live Reminders)</span>
                             </h3>
-                            <p class="text-xs opacity-70">اختر الأسبوع الأكاديمي وقم بتحديث حالة كل محاضرة أو تدوين الملاحظات السريعة.</p>
+                            <p class="text-xs opacity-70">أي مهمة يتم إنجازها تتحدث وتطلق احتفالاً على أجهزتكم معاً.</p>
                         </div>
 
                         <select id="tracker-week-select" onchange="changeTrackerWeek(this.value)" class="apple-glass px-4 py-2 rounded-xl text-xs sm:text-sm font-bold outline-none cursor-pointer">
@@ -583,27 +531,16 @@
                         </select>
                     </div>
 
-                    <!-- Course Mini Progress Pills -->
-                    <div id="course-mini-rings" class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                        <!-- Populated via JS -->
-                    </div>
+                    <div id="course-mini-rings" class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2"></div>
                 </div>
             </div>
 
-            <!-- Courses Checklist Cards Grid -->
-            <div id="tracker-courses-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <!-- Populated via JS -->
-            </div>
+            <div id="tracker-courses-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
         </section>
 
-        <!-- ==========================================
-             PAGE 3: مساعد الإنتاجية والمودل ووضع التركيز
-        =========================================== -->
+        <!-- PAGE 3: المودل ووضع التركيز -->
         <section id="page-zen" class="spa-page hidden space-y-6">
-            
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                
-                <!-- Left Column: Zen / Study Mode (Pomodoro + Ambient Sound) -->
                 <div class="lg:col-span-7 apple-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
                     <div class="flex flex-wrap items-center justify-between gap-3">
                         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-ios-indigo/20 text-ios-indigo dark:text-ios-teal text-xs font-bold">
@@ -611,7 +548,6 @@
                             <span>وضع التركيز العميق • Zen Study Mode</span>
                         </div>
 
-                        <!-- Pomodoro Mode Presets -->
                         <div class="flex items-center gap-1 bg-black/5 dark:bg-white/10 p-1 rounded-xl text-xs font-bold">
                             <button onclick="setPomodoroMode(25, 'جلسة تركيز (Pomodoro)')" id="pomo-25" class="px-3 py-1.5 rounded-lg bg-ios-blue text-white transition">25 د تركيز</button>
                             <button onclick="setPomodoroMode(5, 'استراحة قصيرة ☕')" id="pomo-5" class="px-3 py-1.5 rounded-lg opacity-75 hover:opacity-100 transition">5 د راحة</button>
@@ -619,14 +555,10 @@
                         </div>
                     </div>
 
-                    <!-- Apple Stopwatch Digital Display -->
                     <div class="my-8 flex flex-col items-center justify-center text-center">
                         <span id="pomo-status-label" class="text-xs font-bold uppercase tracking-widest opacity-60 mb-2">جلسة تركيز (Pomodoro)</span>
-                        <div id="pomo-timer-display" class="font-mono text-6xl sm:text-8xl font-extrabold tracking-tighter select-none">
-                            25:00
-                        </div>
+                        <div id="pomo-timer-display" class="font-mono text-6xl sm:text-8xl font-extrabold tracking-tighter select-none">25:00</div>
 
-                        <!-- Active Focus Course Selector -->
                         <div class="mt-4 flex items-center gap-2">
                             <span class="text-xs opacity-70">المادة الحالية:</span>
                             <select id="zen-course-select" class="bg-black/5 dark:bg-white/10 px-3 py-1.5 rounded-xl text-xs font-bold outline-none">
@@ -639,7 +571,6 @@
                             </select>
                         </div>
 
-                        <!-- Start / Pause / Reset Controls -->
                         <div class="mt-7 flex items-center gap-4">
                             <button onclick="togglePomodoro()" id="pomo-start-btn" class="px-8 py-3.5 rounded-2xl bg-ios-green text-white font-bold text-sm shadow-lg shadow-ios-green/30 hover:scale-105 active:scale-95 transition flex items-center gap-2">
                                 <i id="pomo-play-icon" class="ph-fill ph-play text-lg"></i>
@@ -652,7 +583,6 @@
                         </div>
                     </div>
 
-                    <!-- Ambient Sound Synthesizer (مشغل الخلفيات الصوتية الهادئة) -->
                     <div class="pt-5 border-t border-black/10 dark:border-white/10">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-xs font-bold flex items-center gap-1.5">
@@ -679,22 +609,20 @@
                     </div>
                 </div>
 
-                <!-- Right Column: Moodle Assignments & Deadlines Tracker -->
                 <div class="lg:col-span-5 apple-card rounded-3xl p-6 flex flex-col justify-between space-y-5">
                     <div>
                         <div class="flex items-center justify-between mb-4">
                             <div>
                                 <h3 class="text-lg font-black flex items-center gap-2">
                                     <i class="ph-fill ph-graduation-cap text-ios-orange"></i>
-                                    <span>متابعة تكليفات Moodle والمهام</span>
+                                    <span>متابعة تكليفات Moodle المشتركة</span>
                                 </h3>
-                                <p class="text-xs opacity-70">إدارة الكويزات، الأسايمنت، ومهام يوم الخميس.</p>
+                                <p class="text-xs opacity-70">إدارة الكويزات، الأسايمنت، ومهام يوم الخميس لحظياً.</p>
                             </div>
                         </div>
 
-                        <!-- Add New Moodle Task Form -->
                         <div class="bg-black/5 dark:bg-white/5 p-3 rounded-2xl space-y-2.5 mb-4">
-                            <input id="moodle-task-input" type="text" placeholder="أضف واجب أو كويز جديد (مثال: أسايمنت العلوم العسكرية)..." class="w-full bg-transparent text-xs sm:text-sm font-medium outline-none px-2 py-1">
+                            <input id="moodle-task-input" type="text" placeholder="أضف واجب أو كويز جديد..." class="w-full bg-transparent text-xs sm:text-sm font-medium outline-none px-2 py-1">
                             <div class="flex items-center justify-between gap-2">
                                 <select id="moodle-course-input" class="bg-white/60 dark:bg-black/40 text-xs rounded-xl px-2.5 py-1.5 outline-none font-bold">
                                     <option value="العلوم العسكرية">العلوم العسكرية</option>
@@ -711,30 +639,22 @@
                             </div>
                         </div>
 
-                        <!-- Moodle Tasks List -->
-                        <div id="moodle-tasks-list" class="space-y-2.5 max-h-80 overflow-y-auto pr-1">
-                            <!-- Populated via JS -->
-                        </div>
+                        <div id="moodle-tasks-list" class="space-y-2.5 max-h-80 overflow-y-auto pr-1"></div>
                     </div>
 
-                    <!-- Quick Portal Info Box -->
                     <div class="p-4 rounded-2xl bg-gradient-to-r from-ios-orange/15 via-ios-pink/15 to-ios-purple/15 border border-white/10 flex items-center justify-between">
                         <div class="text-xs space-y-0.5">
                             <div class="font-bold">تذكير يوم الخميس الذكي 📌</div>
-                            <div class="opacity-75">محاضرة بايثون (2:00 - 3:00) + تسليم أسايمنت العلوم العسكرية على Moodle.</div>
+                            <div class="opacity-75">محاضرة بايثون (2:00 - 3:00) + تسليم أسايمنت العلوم العسكرية.</div>
                         </div>
                         <i class="ph-fill ph-bell-ringing text-2xl text-ios-orange shrink-0"></i>
                     </div>
                 </div>
-
             </div>
         </section>
-
     </main>
 
-    <!-- ==========================================
-         QUICK NOTES & CODE MODAL (نافذة الملاحظات السريعة)
-    =========================================== -->
+    <!-- QUICK NOTES & CODE MODAL -->
     <div id="notes-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-md">
         <div class="apple-glass rounded-3xl max-w-lg w-full p-6 border border-white/20 shadow-2xl space-y-4 animate-[pageFadeIn_0.25s_ease]">
             <div class="flex items-center justify-between">
@@ -744,7 +664,7 @@
                     </div>
                     <div>
                         <h3 id="notes-modal-title" class="text-base font-black">ملاحظات وأكواد المساق</h3>
-                        <p class="text-[11px] opacity-60">يتم الحفظ تلقائياً في ذاكرة المتصفح (localStorage)</p>
+                        <p class="text-[11px] opacity-60">تتم المزامنة تلقائياً وحفظها سحابياً فور كتابتها (Firebase)</p>
                     </div>
                 </div>
                 <button onclick="closeNotesModal()" class="w-8 h-8 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center hover:bg-ios-red hover:text-white transition">
@@ -755,22 +675,16 @@
             <textarea id="notes-textarea" rows="8" placeholder="اكتب ملخص المحاضرة، أهم النقاط، أو أكواد بايثون/برمجة مرئية هنا..." class="w-full rounded-2xl p-4 bg-black/5 dark:bg-black/40 border border-black/10 dark:border-white/10 text-xs sm:text-sm font-mono outline-none focus:border-ios-blue leading-relaxed"></textarea>
 
             <div class="flex items-center justify-between">
-                <span id="notes-saved-badge" class="text-xs text-ios-green font-bold opacity-0 transition-opacity">✓ تم الحفظ تلقائياً</span>
+                <span id="notes-saved-badge" class="text-xs text-ios-green font-bold opacity-0 transition-opacity">✓ تم الحفظ سحابياً</span>
                 <div class="flex items-center gap-2">
-                    <button onclick="copyNoteContent()" class="px-4 py-2 rounded-xl bg-black/10 dark:bg-white/10 text-xs font-bold hover:opacity-80 transition">
-                        نسخ النص
-                    </button>
-                    <button onclick="saveAndCloseNotes()" class="px-5 py-2 rounded-xl bg-ios-blue text-white text-xs font-bold shadow-md hover:opacity-90 transition">
-                        حفظ وإغلاق
-                    </button>
+                    <button onclick="copyNoteContent()" class="px-4 py-2 rounded-xl bg-black/10 dark:bg-white/10 text-xs font-bold hover:opacity-80 transition">نسخ النص</button>
+                    <button onclick="saveAndCloseNotes()" class="px-5 py-2 rounded-xl bg-ios-blue text-white text-xs font-bold shadow-md hover:opacity-90 transition">حفظ وإغلاق</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ==========================================
-         ONLINE LINK CONFIGURE MODAL (إعداد رابط المحاضرة)
-    =========================================== -->
+    <!-- ONLINE LINK CONFIGURE MODAL -->
     <div id="link-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-md">
         <div class="apple-glass rounded-3xl max-w-md w-full p-6 border border-white/20 shadow-2xl space-y-4">
             <div class="flex items-center justify-between">
@@ -779,219 +693,147 @@
                     <i class="ph-bold ph-x text-sm"></i>
                 </button>
             </div>
-            <p class="text-xs opacity-75">ضع رابط Microsoft Teams أو Zoom أو Moodle الخاص بهذه المادة للانضمام مستقبلاً بضغطة زر واحدة:</p>
+            <p class="text-xs opacity-75">ضع رابط Microsoft Teams أو Zoom الخاص بالمادة للمشاركة والانضمام بضغطة واحدة:</p>
             <input id="link-modal-input" type="url" dir="ltr" placeholder="https://teams.microsoft.com/..." class="w-full rounded-xl p-3 bg-black/5 dark:bg-black/40 border border-black/10 dark:border-white/15 text-xs font-mono outline-none">
             <div class="flex justify-end gap-2">
-                <button onclick="saveCourseLink()" class="px-5 py-2.5 rounded-xl bg-ios-blue text-white text-xs font-bold">حفظ وفتح الرابط</button>
+                <button onclick="saveCourseLink()" class="px-5 py-2.5 rounded-xl bg-ios-blue text-white text-xs font-bold">حفظ سحابي وفتح</button>
             </div>
         </div>
     </div>
 
-    <!-- ==========================================
-         FLOATING macOS DOCK AT BOTTOM (شريط تطبيقات عائم)
-    =========================================== -->
+    <!-- FLOATING macOS DOCK -->
     <div class="fixed bottom-4 inset-x-0 z-40 flex justify-center px-3 pointer-events-none">
         <div class="dock-container apple-glass pointer-events-auto rounded-3xl px-3 py-2 flex items-center gap-2 sm:gap-3 border border-white/25 shadow-2xl">
-            
             <button onclick="switchPage('schedule')" title="الجدول الأسبوعي" class="dock-item group relative w-11 h-11 rounded-2xl bg-gradient-to-b from-ios-blue to-blue-600 text-white flex items-center justify-center shadow-md">
                 <i class="ph-fill ph-calendar text-xl"></i>
                 <span class="absolute -top-8 scale-0 group-hover:scale-100 transition bg-black/80 text-white text-[10px] px-2 py-0.5 rounded-md whitespace-nowrap">الجدول</span>
             </button>
-
             <button onclick="switchPage('tracker')" title="حلقات الإنجاز والمراجعة" class="dock-item group relative w-11 h-11 rounded-2xl bg-gradient-to-b from-ios-pink to-rose-600 text-white flex items-center justify-center shadow-md">
                 <i class="ph-fill ph-activity text-xl"></i>
                 <span class="absolute -top-8 scale-0 group-hover:scale-100 transition bg-black/80 text-white text-[10px] px-2 py-0.5 rounded-md whitespace-nowrap">الإنجاز</span>
             </button>
-
             <button onclick="switchPage('zen')" title="مؤقت بومودورو والتركيز" class="dock-item group relative w-11 h-11 rounded-2xl bg-gradient-to-b from-ios-indigo to-purple-700 text-white flex items-center justify-center shadow-md">
                 <i class="ph-fill ph-timer text-xl"></i>
                 <span class="absolute -top-8 scale-0 group-hover:scale-100 transition bg-black/80 text-white text-[10px] px-2 py-0.5 rounded-md whitespace-nowrap">وضع التركيز</span>
             </button>
-
             <div class="w-px h-7 bg-black/15 dark:bg-white/15 mx-0.5"></div>
-
-            <button onclick="openNotesModal('دفتر الملاحظات العام')" title="ملاحظات سريعة وأكواد" class="dock-item group relative w-11 h-11 rounded-2xl bg-gradient-to-b from-amber-400 to-ios-orange text-white flex items-center justify-center shadow-md">
+            <button onclick="openNotesModal('دفتر الملاحظات المشترك')" title="ملاحظات سريعة وأكواد" class="dock-item group relative w-11 h-11 rounded-2xl bg-gradient-to-b from-amber-400 to-ios-orange text-white flex items-center justify-center shadow-md">
                 <i class="ph-fill ph-notepad text-xl"></i>
                 <span class="absolute -top-8 scale-0 group-hover:scale-100 transition bg-black/80 text-white text-[10px] px-2 py-0.5 rounded-md whitespace-nowrap">الملاحظات</span>
             </button>
-
             <a href="https://moodle.org" target="_blank" rel="noopener noreferrer" onclick="playHaptic('light')" title="منصة المودل (Moodle)" class="dock-item group relative w-11 h-11 rounded-2xl bg-gradient-to-b from-orange-500 to-red-500 text-white flex items-center justify-center shadow-md">
                 <i class="ph-fill ph-graduation-cap text-xl"></i>
                 <span class="absolute -top-8 scale-0 group-hover:scale-100 transition bg-black/80 text-white text-[10px] px-2 py-0.5 rounded-md whitespace-nowrap">Moodle</span>
             </a>
-
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" onclick="playHaptic('light')" title="مستودعات الأكواد والمشاريع" class="dock-item group relative w-11 h-11 rounded-2xl bg-gradient-to-b from-zinc-700 to-zinc-900 text-white flex items-center justify-center shadow-md">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" onclick="playHaptic('light')" title="مستودعات الأكواد" class="dock-item group relative w-11 h-11 rounded-2xl bg-gradient-to-b from-zinc-700 to-zinc-900 text-white flex items-center justify-center shadow-md">
                 <i class="ph-fill ph-github-logo text-xl"></i>
                 <span class="absolute -top-8 scale-0 group-hover:scale-100 transition bg-black/80 text-white text-[10px] px-2 py-0.5 rounded-md whitespace-nowrap">GitHub</span>
             </a>
         </div>
     </div>
 
-    <!-- ==========================================
-         APPLICATION JAVASCRIPT LOGIC
-    =========================================== -->
+    <!-- APPLICATION LOGIC & REALTIME SYNC -->
     <script>
-        /* ==========================================
-           1. CORE DATA DEFINITIONS (البيانات الأكاديمية)
-        =========================================== */
+        /* 1. COURSES DATA */
         const COURSES = [
-            {
-                id: 'sw_modeling',
-                name: 'نمذجة نظم البرمجيات',
-                mode: 'inperson',
-                room: 'مختبر الحاسوب',
-                color: '#007AFF',
-                icon: 'ph-TreeStructure',
-                days: ['sun', 'tue'],
-                start: 10.0,
-                end: 11.0,
-                timeLabel: '10:00 - 11:00 ص'
-            },
-            {
-                id: 'comp_arch',
-                name: 'تنظيم وعمارة الحاسوب',
-                mode: 'inperson',
-                room: 'قاعة 208 ل',
-                color: '#AF52DE',
-                icon: 'ph-cpu',
-                days: ['sun', 'tue'],
-                start: 11.0,
-                end: 12.0,
-                timeLabel: '11:00 - 12:00 ظ'
-            },
-            {
-                id: 'visual_prog',
-                name: 'برمجة مرئية',
-                mode: 'inperson',
-                room: 'قاعة 40 ب',
-                color: '#FF2D55',
-                icon: 'ph-layout',
-                days: ['sun', 'tue'],
-                start: 12.0,
-                end: 13.0,
-                timeLabel: '12:00 - 01:00 م'
-            },
-            {
-                id: 'lunch_break',
-                name: 'بريك الغداء والراحة ☕',
-                mode: 'break',
-                room: 'استراحة الحرم الجامعي',
-                color: '#FF9500',
-                icon: 'ph-coffee',
-                days: ['sun', 'tue'],
-                start: 13.0,
-                end: 14.0,
-                timeLabel: '01:00 - 02:00 م',
-                isBreak: true
-            },
-            {
-                id: 'python_prog',
-                name: 'برمجة بايثون',
-                mode: 'inperson',
-                room: 'قاعة 274 أ',
-                color: '#34C759',
-                icon: 'ph-code',
-                days: ['sun', 'tue', 'thu'],
-                start: 14.0,
-                end: 15.0,
-                timeLabel: '02:00 - 03:00 م'
-            },
-            {
-                id: 'military_sci',
-                name: 'العلوم العسكرية',
-                mode: 'online',
-                room: 'محاضرة أونلاين (عن بُعد)',
-                color: '#5856D6',
-                icon: 'ph-shield-star',
-                days: ['sun', 'tue'],
-                start: 16.5,
-                end: 17.5,
-                timeLabel: '04:30 - 05:30 م'
-            },
-            {
-                id: 'leadership',
-                name: 'القيادة والمسؤولية المجتمعية',
-                mode: 'online',
-                room: 'محاضرة أونلاين (الأحد)',
-                color: '#5AC8FA',
-                icon: 'ph-users-three',
-                days: ['sun'],
-                start: 17.5,
-                end: 18.5,
-                timeLabel: '05:30 - 06:30 م'
-            },
-            {
-                id: 'life_skills',
-                name: 'مهارات حياتية',
-                mode: 'online',
-                room: 'محاضرة أونلاين (الثلاثاء)',
-                color: '#FF9500',
-                icon: 'ph-sparkle',
-                days: ['tue'],
-                start: 17.5,
-                end: 18.5,
-                timeLabel: '05:30 - 06:30 م'
-            },
-            {
-                id: 'thu_moodle',
-                name: 'أسايمنت العلوم العسكرية ومتابعة Moodle',
-                mode: 'online',
-                room: 'منصة المودل (Moodle)',
-                color: '#FF2D55',
-                icon: 'ph-check-square-offset',
-                days: ['thu'],
-                start: 17.0,
-                end: 19.0,
-                timeLabel: 'مسائي مرن • متابعة وتسليم'
-            }
+            { id: 'sw_modeling', name: 'نمذجة نظم البرمجيات', mode: 'inperson', room: 'مختبر الحاسوب', color: '#007AFF', icon: 'ph-TreeStructure', days: ['sun', 'tue'], start: 10.0, end: 11.0, timeLabel: '10:00 - 11:00 ص' },
+            { id: 'comp_arch', name: 'تنظيم وعمارة الحاسوب', mode: 'inperson', room: 'قاعة 208 ل', color: '#AF52DE', icon: 'ph-cpu', days: ['sun', 'tue'], start: 11.0, end: 12.0, timeLabel: '11:00 - 12:00 ظ' },
+            { id: 'visual_prog', name: 'برمجة مرئية', mode: 'inperson', room: 'قاعة 40 ب', color: '#FF2D55', icon: 'ph-layout', days: ['sun', 'tue'], start: 12.0, end: 13.0, timeLabel: '12:00 - 01:00 م' },
+            { id: 'lunch_break', name: 'بريك الغداء والراحة ☕', mode: 'break', room: 'استراحة الحرم الجامعي', color: '#FF9500', icon: 'ph-coffee', days: ['sun', 'tue'], start: 13.0, end: 14.0, timeLabel: '01:00 - 02:00 م', isBreak: true },
+            { id: 'python_prog', name: 'برمجة بايثون', mode: 'inperson', room: 'قاعة 274 أ', color: '#34C759', icon: 'ph-code', days: ['sun', 'tue', 'thu'], start: 14.0, end: 15.0, timeLabel: '02:00 - 03:00 م' },
+            { id: 'military_sci', name: 'العلوم العسكرية', mode: 'online', room: 'محاضرة أونلاين (عن بُعد)', color: '#5856D6', icon: 'ph-shield-star', days: ['sun', 'tue'], start: 16.5, end: 17.5, timeLabel: '04:30 - 05:30 م' },
+            { id: 'leadership', name: 'القيادة والمسؤولية المجتمعية', mode: 'online', room: 'محاضرة أونلاين (الأحد)', color: '#5AC8FA', icon: 'ph-users-three', days: ['sun'], start: 17.5, end: 18.5, timeLabel: '05:30 - 06:30 م' },
+            { id: 'life_skills', name: 'مهارات حياتية', mode: 'online', room: 'محاضرة أونلاين (الثلاثاء)', color: '#FF9500', icon: 'ph-sparkle', days: ['tue'], start: 17.5, end: 18.5, timeLabel: '05:30 - 06:30 م' },
+            { id: 'thu_moodle', name: 'أسايمنت العلوم العسكرية ومتابعة Moodle', mode: 'online', room: 'منصة المودل (Moodle)', color: '#FF2D55', icon: 'ph-check-square-offset', days: ['thu'], start: 17.0, end: 19.0, timeLabel: 'مسائي مرن • متابعة وتسليم' }
         ];
 
         const DAYS_META = [
             { key: 'sun', name: 'الأحد', jsDay: 0, isOff: false, subtitle: 'يوم دراسي متكامل (وجاهي + أونلاين مسائي)' },
-            { key: 'mon', name: 'الإثنين', jsDay: 1, isOff: true, subtitle: 'عطلة هادئة OFF • يوم راحة ومراجعة ذاتية 🌿' },
+            { key: 'mon', name: 'الإثنين', jsDay: 1, isOff: true, subtitle: 'عطلة هادئة OFF • راحة ومراجعة ذاتية 🌿' },
             { key: 'tue', name: 'الثلاثاء', jsDay: 2, isOff: false, subtitle: 'يوم دراسي متكامل (وجاهي + أونلاين مسائي)' },
             { key: 'wed', name: 'الأربعاء', jsDay: 3, isOff: true, subtitle: 'عطلة هادئة OFF • استجمام وتحضير للمشاريع ☕' },
             { key: 'thu', name: 'الخميس', jsDay: 4, isOff: false, subtitle: 'محاضرة بايثون وجاهي + أسايمنت العلوم العسكرية ومتابعة Moodle' }
         ];
 
-        /* ==========================================
-           2. STATE & LOCAL STORAGE MANAGEMENT
-        =========================================== */
+        /* 2. FIREBASE REALTIME DATABASE CONFIGURATION */
+        const firebaseConfig = {
+            apiKey: "AIzaSyBK67ciojlKCU_x9_ylhHRZAh-F-y6IdvA",
+            authDomain: "academic-schedule-e7bc0.firebaseapp.com",
+            databaseURL: "https://academic-schedule-e7bc0-default-rtdb.firebaseio.com",
+            projectId: "academic-schedule-e7bc0",
+            storageBucket: "academic-schedule-e7bc0.firebasestorage.app",
+            messagingSenderId: "421548512602",
+            appId: "1:421548512602:web:cb2b5519cba63fd2e48f63",
+            measurementId: "G-GRJNZJ2FSJ"
+        };
+
+        let db = null;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.database();
+        } catch (err) {
+            console.error("Firebase init error:", err);
+        }
+
+        /* 3. APPLICATION STATE */
         let appState = {
             theme: localStorage.getItem('za_theme') || 'dark',
             soundEnabled: localStorage.getItem('za_sound') !== 'false',
             dayFilter: 'all',
             modeFilter: 'all',
-            currentWeek: localStorage.getItem('za_week') || 'w1',
-            attendance: JSON.parse(localStorage.getItem('za_attendance') || '{}'),
-            checklists: JSON.parse(localStorage.getItem('za_checklists') || '{}'),
-            notes: JSON.parse(localStorage.getItem('za_notes') || '{}'),
-            links: JSON.parse(localStorage.getItem('za_links') || '{}'),
-            moodleTasks: JSON.parse(localStorage.getItem('za_moodle') || 'null') || [
+            currentWeek: 'w1',
+            attendance: {},
+            checklists: {},
+            notes: {},
+            links: {},
+            moodleTasks: [
                 { id: 1, title: 'حل وتسليم أسايمنت العلوم العسكرية الأسبوعي', course: 'العلوم العسكرية', due: 'الخميس 11:59 م', done: false },
-                { id: 2, title: 'مراجعة كود المختبر وتطبيق تمارين القوائم والدوال', course: 'برمجة بايثون', due: 'الثلاثاء 2:00 م', done: false },
-                { id: 3, title: 'رسم مخطط حالات الاستخدام (Use Case Diagram)', course: 'نمذجة نظم البرمجيات', due: 'الأحد 10:00 ص', done: true },
-                { id: 4, title: 'تجهيز واجهة المستخدم للتطبيق العملي', course: 'برمجة مرئية', due: 'الأحد 12:00 ظ', done: false }
+                { id: 2, title: 'مراجعة كود المختبر وتطبيق تمارين بايثون', course: 'برمجة بايثون', due: 'الثلاثاء 2:00 م', done: false },
+                { id: 3, title: 'رسم مخطط حالات الاستخدام (Use Case Diagram)', course: 'نمذجة نظم البرمجيات', due: 'الأحد 10:00 ص', done: true }
             ],
             simDay: 'real',
             simHour: 10.5
         };
 
-        /* ==========================================
-           3. HAPTIC CLICK SOUND & WEB AUDIO ENGINE
-        =========================================== */
-        let audioCtx = null;
-        let ambientNodes = null;
-        let currentAmbientType = null;
+        // Realtime Listener to sync across all devices
+        if (db) {
+            db.ref('academic_os_data').on('value', (snapshot) => {
+                const cloudData = snapshot.val();
+                if (cloudData) {
+                    if (cloudData.attendance) appState.attendance = cloudData.attendance;
+                    if (cloudData.checklists) appState.checklists = cloudData.checklists;
+                    if (cloudData.notes) appState.notes = cloudData.notes;
+                    if (cloudData.links) appState.links = cloudData.links;
+                    if (cloudData.moodleTasks) appState.moodleTasks = cloudData.moodleTasks;
+                    if (cloudData.currentWeek) appState.currentWeek = cloudData.currentWeek;
 
+                    renderAttendanceTracker();
+                    renderTrackerPage();
+                    renderMoodleTasks();
+                    
+                    const noteText = document.getElementById('notes-textarea');
+                    if (noteText && currentNotesSubject && appState.notes[currentNotesSubject] !== undefined) {
+                        if (document.activeElement !== noteText) {
+                            noteText.value = appState.notes[currentNotesSubject];
+                        }
+                    }
+                }
+            });
+        }
+
+        function pushDataToCloud(key, value) {
+            if (!db) return;
+            db.ref(`academic_os_data/${key}`).set(value);
+        }
+
+        /* 4. AUDIO ENGINE */
+        let audioCtx = null, ambientNodes = null, currentAmbientType = null;
         function getAudioContext() {
             if (!audioCtx) {
                 const AudioContextClass = window.AudioContext || window.webkitAudioContext;
                 audioCtx = new AudioContextClass();
             }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+            if (audioCtx.state === 'suspended') audioCtx.resume();
             return audioCtx;
         }
 
@@ -1003,7 +845,6 @@
                 const gain = ctx.createGain();
                 osc.connect(gain);
                 gain.connect(ctx.destination);
-
                 const now = ctx.currentTime;
                 if (type === 'light') {
                     osc.type = 'sine';
@@ -1015,8 +856,8 @@
                     osc.stop(now + 0.04);
                 } else if (type === 'success') {
                     osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(587.33, now); // D5
-                    osc.frequency.setValueAtTime(880, now + 0.08); // A5
+                    osc.frequency.setValueAtTime(587.33, now);
+                    osc.frequency.setValueAtTime(880, now + 0.08);
                     gain.gain.setValueAtTime(0.12, now);
                     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
                     osc.start(now);
@@ -1030,9 +871,7 @@
                     osc.start(now);
                     osc.stop(now + 0.22);
                 }
-            } catch (e) {
-                // Ignore audio context restrictions before user gesture
-            }
+            } catch (e) {}
         }
 
         function toggleSound() {
@@ -1051,9 +890,7 @@
             }
         }
 
-        /* ==========================================
-           4. THEME (DARK / LIGHT MODE)
-        =========================================== */
+        /* 5. THEME */
         function applyTheme() {
             const root = document.documentElement;
             const icon = document.getElementById('theme-icon');
@@ -1073,9 +910,7 @@
             applyTheme();
         }
 
-        /* ==========================================
-           5. SPLASH SCREEN & NAVIGATION
-        =========================================== */
+        /* 6. NAVIGATION */
         function enterDashboard() {
             playHaptic('enter');
             document.getElementById('splash-screen').classList.add('hidden-splash');
@@ -1096,14 +931,10 @@
                     btn.classList.add('opacity-75');
                 }
             });
-            if (pageId === 'tracker') {
-                renderTrackerPage();
-            }
+            if (pageId === 'tracker') renderTrackerPage();
         }
 
-        /* ==========================================
-           6. DYNAMIC ISLAND & LIVE ACTIVITY ENGINE
-        =========================================== */
+        /* 7. DYNAMIC ISLAND & CLOCK */
         function toggleIslandExpand() {
             playHaptic('light');
             const exp = document.getElementById('island-expanded');
@@ -1131,7 +962,7 @@
         function getCurrentTimeState() {
             const now = new Date();
             if (appState.simDay === 'real') {
-                const dayIndex = now.getDay(); // 0=Sun, 1=Mon, ...
+                const dayIndex = now.getDay();
                 const floatHour = now.getHours() + (now.getMinutes() / 60);
                 return { dayIndex, floatHour, realDate: now };
             } else {
@@ -1156,7 +987,6 @@
             const dayNameMap = { 0: 'الأحد', 1: 'الإثنين', 2: 'الثلاثاء', 3: 'الأربعاء', 4: 'الخميس', 5: 'الجمعة', 6: 'السبت' };
             const currentDayKey = dayKeyMap[dayIndex];
 
-            // Clocks
             const timeStr = realDate.toLocaleTimeString('ar-JO', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             const shortTime = realDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
             document.getElementById('island-live-clock').textContent = timeStr;
@@ -1169,31 +999,25 @@
             const islandSub = document.getElementById('island-subdetail');
             const islandDot = document.getElementById('island-dot');
 
-            // Next Lecture Banner Elements
             const nextLabel = document.getElementById('next-card-label');
             const nextTitle = document.getElementById('next-card-title');
             const nextMeta = document.getElementById('next-card-meta');
             const nextAction = document.getElementById('next-card-action');
 
-            // Check if OFF day (Mon, Wed, Fri, Sat)
             if (['mon', 'wed', 'fri', 'sat'].includes(currentDayKey)) {
                 islandDot.className = 'w-2.5 h-2.5 rounded-full bg-ios-teal shrink-0';
                 islandTitle.textContent = `إجازة سعيدة (${dayNameMap[dayIndex]}) • يوم راحة واستجمام 🌸`;
                 islandBadge.textContent = 'OFF DAY';
                 islandProgress.style.width = '100%';
-                islandSub.textContent = 'لا توجد محاضرات مجدولة اليوم. وقت مثالي للمراجعة الذاتية والراحة.';
-
+                islandSub.textContent = 'لا توجد محاضرات مجدولة اليوم.';
                 nextLabel.textContent = `حالة اليوم (${dayNameMap[dayIndex]})`;
                 nextTitle.textContent = 'عطلة أكاديمية هادئة (OFF) ✨';
                 nextMeta.innerHTML = `<span><i class="ph-fill ph-sparkle ml-1 text-ios-teal"></i>استمتع بوقتك أو راجع ملخصات الأسبوع</span>`;
-                nextAction.innerHTML = `<button onclick="switchPage('tracker')" class="px-4 py-2.5 rounded-xl bg-ios-blue text-white text-xs font-bold">فتح متتبع المراجعة</button>`;
+                nextAction.innerHTML = `<button onclick="switchPage('tracker')" class="px-4 py-2.5 rounded-xl bg-ios-blue text-white text-xs font-bold">متتبع المراجعة</button>`;
                 return;
             }
 
-            // Get today's courses sorted by start time
             const todaysCourses = COURSES.filter(c => c.days.includes(currentDayKey)).sort((a, b) => a.start - b.start);
-
-            // Check if currently inside a lecture or break
             const activeCourse = todaysCourses.find(c => floatHour >= c.start && floatHour < c.end);
             const upcomingCourse = todaysCourses.find(c => c.start > floatHour);
 
@@ -1236,16 +1060,14 @@
                 `;
                 renderBannerAction(upcomingCourse, nextAction);
             } else {
-                // Finished all classes for today
                 islandDot.className = 'w-2.5 h-2.5 rounded-full bg-ios-purple shrink-0';
                 islandTitle.textContent = `انتهت محاضرات ${dayNameMap[dayIndex]} بنجاح 🎉`;
                 islandBadge.textContent = 'مكتمل ✓';
                 islandProgress.style.width = '100%';
-                islandSub.textContent = 'أحسنت صنعاً اليوم! لا تنسَ تحديث حلقات الإنجاز.';
-
+                islandSub.textContent = 'أحسنت صنعاً اليوم!';
                 nextLabel.textContent = 'حالة الدوام اليومي';
                 nextTitle.textContent = 'اكتملت جميع محاضرات اليوم بنجاح 🌟';
-                nextMeta.innerHTML = `<span>تم إنهاء الجدول الدراسي ليوم ${dayNameMap[dayIndex]}، وقت الراحة أو المراجعة المسائية.</span>`;
+                nextMeta.innerHTML = `<span>تم إنهاء جدول يوم ${dayNameMap[dayIndex]}.</span>`;
                 nextAction.innerHTML = `<button onclick="switchPage('tracker')" class="px-4 py-2.5 rounded-xl bg-ios-green text-white text-xs font-bold">تحديث الإنجاز اليومي</button>`;
             }
         }
@@ -1255,7 +1077,7 @@
                 container.innerHTML = `
                     <button onclick="joinOnlineLecture('${course.id}', '${course.name}')" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-ios-indigo to-ios-blue text-white text-xs font-bold shadow-md flex items-center gap-1.5">
                         <i class="ph-bold ph-video-camera"></i>
-                        <span>اتصال سريع (One-Click Join)</span>
+                        <span>انضمام سريع</span>
                     </button>
                 `;
             } else {
@@ -1268,18 +1090,14 @@
             }
         }
 
-        /* ==========================================
-           7. PAGE 1: SCHEDULE RENDERING & FILTERS
-        =========================================== */
+        /* 8. SCHEDULE RENDERING */
         function setDayFilter(day) {
             playHaptic('light');
             appState.dayFilter = day;
             document.querySelectorAll('.day-pill').forEach(btn => {
-                if (btn.dataset.day === day) {
-                    btn.className = 'day-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-ios-blue text-white shrink-0 transition shadow-sm';
-                } else {
-                    btn.className = 'day-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-black/5 dark:bg-white/10 shrink-0 transition';
-                }
+                btn.className = (btn.dataset.day === day)
+                    ? 'day-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-ios-blue text-white shrink-0 transition shadow-sm'
+                    : 'day-pill px-3.5 py-2 rounded-xl text-xs font-bold bg-black/5 dark:bg-white/10 shrink-0 transition';
             });
             renderSchedule();
         }
@@ -1288,11 +1106,9 @@
             playHaptic('light');
             appState.modeFilter = mode;
             document.querySelectorAll('.mode-pill').forEach(btn => {
-                if (btn.dataset.mode === mode) {
-                    btn.className = 'mode-pill px-3 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-white/15 shadow-sm transition';
-                } else {
-                    btn.className = 'mode-pill px-3 py-1.5 rounded-lg text-xs font-bold opacity-70 hover:opacity-100 transition';
-                }
+                btn.className = (btn.dataset.mode === mode)
+                    ? 'mode-pill px-3 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-white/15 shadow-sm transition'
+                    : 'mode-pill px-3 py-1.5 rounded-lg text-xs font-bold opacity-70 hover:opacity-100 transition';
             });
             renderSchedule();
         }
@@ -1304,10 +1120,8 @@
                 : DAYS_META.filter(d => d.key === appState.dayFilter);
 
             let html = '';
-
             daysToShow.forEach(dayObj => {
                 if (dayObj.isOff) {
-                    // Calm OFF Day Card (Monday & Wednesday)
                     html += `
                         <div class="apple-card rounded-3xl p-6 border border-ios-teal/30 relative overflow-hidden">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -1323,27 +1137,17 @@
                                         <p class="text-xs opacity-75 mt-0.5">${dayObj.subtitle}</p>
                                     </div>
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <button onclick="switchPage('zen')" class="px-4 py-2.5 rounded-xl bg-black/5 dark:bg-white/10 text-xs font-bold hover:bg-ios-teal hover:text-white transition">
-                                        جلسة مراجعة هادئة
-                                    </button>
-                                </div>
+                                <button onclick="switchPage('zen')" class="px-4 py-2.5 rounded-xl bg-black/5 dark:bg-white/10 text-xs font-bold hover:bg-ios-teal hover:text-white transition">جلسة مراجعة هادئة</button>
                             </div>
                         </div>
                     `;
                     return;
                 }
 
-                // Filter courses for this day
                 let dayCourses = COURSES.filter(c => c.days.includes(dayObj.key));
-
-                if (appState.modeFilter === 'inperson') {
-                    dayCourses = dayCourses.filter(c => c.mode === 'inperson');
-                } else if (appState.modeFilter === 'online') {
-                    dayCourses = dayCourses.filter(c => c.mode === 'online');
-                } else if (appState.modeFilter === 'rooms') {
-                    dayCourses = dayCourses.filter(c => c.mode === 'inperson' && !c.isBreak);
-                }
+                if (appState.modeFilter === 'inperson') dayCourses = dayCourses.filter(c => c.mode === 'inperson');
+                else if (appState.modeFilter === 'online') dayCourses = dayCourses.filter(c => c.mode === 'online');
+                else if (appState.modeFilter === 'rooms') dayCourses = dayCourses.filter(c => c.mode === 'inperson' && !c.isBreak);
 
                 html += `
                     <div class="space-y-3">
@@ -1355,41 +1159,32 @@
                             </div>
                             <span class="text-xs font-bold px-3 py-1 rounded-full bg-black/5 dark:bg-white/10">${dayCourses.length} فقرات</span>
                         </div>
-
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             ${dayCourses.map(course => renderCourseCard(course, dayObj.key)).join('')}
                         </div>
                     </div>
                 `;
             });
-
             container.innerHTML = html;
         }
 
         function renderCourseCard(course, dayKey) {
             const isOnline = course.mode === 'online';
             const isBreak = course.isBreak;
-
-            // Dynamic badge
-            let badgeHtml = '';
-            if (isBreak) {
-                badgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-ios-orange/20 text-ios-orange">استراحة الغداء ☕</span>`;
-            } else if (isOnline) {
-                badgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-ios-indigo/20 text-ios-indigo dark:text-ios-teal">أونلاين • Online</span>`;
-            } else {
-                badgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-ios-green/20 text-ios-green">وجاهي • ${course.room}</span>`;
-            }
+            let badgeHtml = isBreak 
+                ? `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-ios-orange/20 text-ios-orange">استراحة الغداء ☕</span>`
+                : isOnline 
+                    ? `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-ios-indigo/20 text-ios-indigo dark:text-ios-teal">أونلاين</span>`
+                    : `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-ios-green/20 text-ios-green">وجاهي • ${course.room}</span>`;
 
             return `
                 <div class="apple-card rounded-3xl p-5 flex flex-col justify-between gap-4 relative overflow-hidden group">
                     <div class="absolute top-0 right-0 w-1.5 h-full" style="background:${course.color}"></div>
-                    
                     <div class="space-y-3">
                         <div class="flex items-center justify-between gap-2">
                             <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-black/5 dark:bg-white/10">${course.timeLabel}</span>
                             ${badgeHtml}
                         </div>
-
                         <div class="flex items-start gap-3">
                             <div class="w-11 h-11 rounded-2xl flex items-center justify-center text-white text-xl shrink-0 shadow-md" style="background:${course.color}">
                                 <i class="ph-fill ${course.icon}"></i>
@@ -1403,18 +1198,17 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="pt-3 border-t border-black/5 dark:border-white/10 flex items-center justify-between gap-2">
                         ${isOnline ? `
                             <button onclick="joinOnlineLecture('${course.id}', '${course.name}')" class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-ios-blue to-ios-indigo text-white text-xs font-bold shadow-sm hover:opacity-95 active:scale-95 transition flex items-center justify-center gap-1.5">
-                                <i class="ph-bold ph-Broadcast"></i>
-                                <span>انضمام سريع (Join)</span>
+                                <i class="ph-bold ph-broadcast"></i>
+                                <span>انضمام سريع</span>
                             </button>
-                            <button onclick="openLinkConfig('${course.id}', '${course.name}')" title="تعديل رابط المحاضرة" class="p-2 rounded-xl bg-black/5 dark:bg-white/10 text-xs hover:bg-black/15 transition">
+                            <button onclick="openLinkConfig('${course.id}', '${course.name}')" title="تعديل الرابط المشترك" class="p-2 rounded-xl bg-black/5 dark:bg-white/10 text-xs hover:bg-black/15 transition">
                                 <i class="ph-bold ph-gear"></i>
                             </button>
                         ` : isBreak ? `
-                            <span class="text-xs opacity-70 font-medium">وقت مستقطع لتجديد النشاط وتناول الغداء 🍽️</span>
+                            <span class="text-xs opacity-70 font-medium">استراحة لتناول الغداء وتجديد الطاقة 🍽️</span>
                         ` : `
                             <button onclick="openNotesModal('${course.name}')" class="flex-1 py-2 px-3 rounded-xl bg-black/5 dark:bg-white/10 hover:bg-ios-blue hover:text-white text-xs font-bold transition flex items-center justify-center gap-1.5">
                                 <i class="ph-bold ph-note-pencil"></i>
@@ -1426,102 +1220,10 @@
             `;
         }
 
-        /* ==========================================
-           8. ONE-CLICK JOIN & ICS CALENDAR EXPORT
-        =========================================== */
-        let activeLinkCourseId = null;
-
-        function joinOnlineLecture(courseId, courseName) {
-            playHaptic('light');
-            const savedUrl = appState.links[courseId];
-            if (savedUrl) {
-                window.open(savedUrl, '_blank', 'noopener,noreferrer');
-            } else {
-                openLinkConfig(courseId, courseName);
-            }
-        }
-
-        function openLinkConfig(courseId, courseName) {
-            playHaptic('light');
-            activeLinkCourseId = courseId;
-            document.getElementById('link-modal-title').textContent = `إعداد رابط: ${courseName}`;
-            document.getElementById('link-modal-input').value = appState.links[courseId] || 'https://teams.microsoft.com';
-            const modal = document.getElementById('link-modal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
-
-        function closeLinkModal() {
-            const modal = document.getElementById('link-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
-
-        function saveCourseLink() {
-            playHaptic('success');
-            const val = document.getElementById('link-modal-input').value.trim();
-            if (val && activeLinkCourseId) {
-                appState.links[activeLinkCourseId] = val;
-                localStorage.setItem('za_links', JSON.stringify(appState.links));
-                closeLinkModal();
-                window.open(val, '_blank', 'noopener,noreferrer');
-            }
-        }
-
-        function exportScheduleICS() {
-            playHaptic('success');
-            const lines = [
-                'BEGIN:VCALENDAR',
-                'VERSION:2.0',
-                'PRODID:-//Zakaria & Aisha Academic OS//AR',
-                'CALSCALE:GREGORIAN',
-                'METHOD:PUBLISH'
-            ];
-
-            // Reference Sunday date for recurring weekly events
-            const dayCodeMap = { sun: 'SU', tue: 'TU', thu: 'TH' };
-
-            COURSES.filter(c => !c.isBreak).forEach(course => {
-                const byDay = course.days.map(d => dayCodeMap[d]).filter(Boolean).join(',');
-                const startHour = Math.floor(course.start);
-                const startMin = Math.round((course.start - startHour) * 60);
-                const endHour = Math.floor(course.end);
-                const endMin = Math.round((course.end - endHour) * 60);
-
-                const dtStart = `20250216T${String(startHour).padStart(2, '0')}${String(startMin).padStart(2, '0')}00`;
-                const dtEnd = `20250216T${String(endHour).padStart(2, '0')}${String(endMin).padStart(2, '0')}00`;
-
-                lines.push(
-                    'BEGIN:VEVENT',
-                    `UID:${course.id}@academic-os.local`,
-                    `SUMMARY:${course.name} (${course.room})`,
-                    `LOCATION:${course.room}`,
-                    `DESCRIPTION:الجدول الأكاديمي الذكي - زكريا وعائشة`,
-                    `DTSTART:${dtStart}`,
-                    `DTEND:${dtEnd}`,
-                    `RRULE:FREQ=WEEKLY;BYDAY=${byDay}`,
-                    'END:VEVENT'
-                );
-            });
-
-            lines.push('END:VCALENDAR');
-
-            const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Zakaria_Aisha_Schedule.ics';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
-        /* ==========================================
-           9. SMART ATTENDANCE TRACKER (حاسبة الغياب)
-        =========================================== */
+        /* 9. ATTENDANCE TRACKER (SYNCED) */
         function renderAttendanceTracker() {
             const container = document.getElementById('attendance-grid');
+            if (!container) return;
             const trackableCourses = COURSES.filter(c => !c.isBreak && c.id !== 'thu_moodle');
             const maxAbsences = 6;
 
@@ -1545,11 +1247,9 @@
                             <span class="text-sm font-extrabold truncate">${c.name}</span>
                             ${statusBadge}
                         </div>
-
                         <div class="w-full bg-black/10 dark:bg-white/10 h-2 rounded-full overflow-hidden">
                             <div class="${barColor} h-full transition-all duration-300" style="width:${pct}%"></div>
                         </div>
-
                         <div class="flex items-center justify-between text-xs">
                             <span class="opacity-70">الغيابات: <strong class="font-mono text-sm">${count}</strong> / ${maxAbsences}</span>
                             <div class="flex items-center gap-1.5">
@@ -1566,32 +1266,32 @@
             playHaptic('light');
             const current = appState.attendance[courseId] || 0;
             appState.attendance[courseId] = Math.max(0, current + delta);
-            localStorage.setItem('za_attendance', JSON.stringify(appState.attendance));
+            pushDataToCloud('attendance', appState.attendance);
             renderAttendanceTracker();
         }
 
         function resetAttendance() {
             playHaptic('light');
             appState.attendance = {};
-            localStorage.setItem('za_attendance', JSON.stringify(appState.attendance));
+            pushDataToCloud('attendance', appState.attendance);
             renderAttendanceTracker();
         }
 
-        /* ==========================================
-           10. PAGE 2: TRACKER, REMINDERS & ACTIVITY RINGS
-        =========================================== */
+        /* 10. REMINDERS & ACTIVITY RINGS (SYNCED) */
         function changeTrackerWeek(weekKey) {
             playHaptic('light');
             appState.currentWeek = weekKey;
-            localStorage.setItem('za_week', weekKey);
+            pushDataToCloud('currentWeek', weekKey);
             renderTrackerPage();
         }
 
         function renderTrackerPage() {
-            document.getElementById('tracker-week-select').value = appState.currentWeek;
+            const selectEl = document.getElementById('tracker-week-select');
+            if (selectEl) selectEl.value = appState.currentWeek;
             const academicCourses = COURSES.filter(c => !c.isBreak && c.id !== 'thu_moodle');
             const grid = document.getElementById('tracker-courses-grid');
             const miniContainer = document.getElementById('course-mini-rings');
+            if (!grid) return;
 
             let totalAttendSum = 0, totalReview = 0, totalHw = 0;
             const totalPossible = academicCourses.length;
@@ -1625,12 +1325,11 @@
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="font-mono text-sm font-extrabold" style="color:${course.color}">${coursePct}%</span>
-                                <button onclick="openNotesModal('${course.name}')" class="p-2 rounded-xl bg-black/5 dark:bg-white/10 hover:bg-ios-blue hover:text-white transition" title="ملاحظات وأكواد المادة">
+                                <button onclick="openNotesModal('${course.name}')" class="p-2 rounded-xl bg-black/5 dark:bg-white/10 hover:bg-ios-blue hover:text-white transition" title="ملاحظات المساق">
                                     <i class="ph-bold ph-note-pencil text-sm"></i>
                                 </button>
                             </div>
                         </div>
-
                         <div class="grid grid-cols-2 gap-2.5 pt-1">
                             ${renderCheckItem(`${keyBase}_attend`, 'حضور المحاضرة', stAttend)}
                             ${renderCheckItem(`${keyBase}_summary`, 'تلخيص الأفكار', stSummary)}
@@ -1641,7 +1340,6 @@
                 `;
             }).join('');
 
-            // Mini course rings summary
             miniContainer.innerHTML = academicCourses.slice(0, 4).map(c => {
                 const keyBase = `${appState.currentWeek}_${c.id}`;
                 const done = ['attend', 'summary', 'review', 'hw'].filter(t => appState.checklists[`${keyBase}_${t}`]).length;
@@ -1654,7 +1352,6 @@
                 `;
             }).join('');
 
-            // Update Apple Activity Rings SVG
             const pct1 = Math.round((totalAttendSum / totalPossible) * 100);
             const pct2 = Math.round((totalReview / totalPossible) * 100);
             const pct3 = Math.round((totalHw / totalPossible) * 100);
@@ -1689,18 +1386,13 @@
         function toggleChecklistItem(key, isChecked) {
             playHaptic(isChecked ? 'success' : 'light');
             appState.checklists[key] = isChecked;
-            localStorage.setItem('za_checklists', JSON.stringify(appState.checklists));
+            pushDataToCloud('checklists', appState.checklists);
             renderTrackerPage();
-            if (isChecked) {
-                launchConfetti();
-            }
+            if (isChecked) launchConfetti();
         }
 
-        /* ==========================================
-           11. QUICK NOTES MODAL
-        =========================================== */
+        /* 11. QUICK NOTES (SYNCED) */
         let currentNotesSubject = '';
-
         function openNotesModal(subjectName) {
             playHaptic('light');
             currentNotesSubject = subjectName;
@@ -1721,19 +1413,20 @@
             playHaptic('success');
             const val = document.getElementById('notes-textarea').value;
             appState.notes[currentNotesSubject] = val;
-            localStorage.setItem('za_notes', JSON.stringify(appState.notes));
+            pushDataToCloud('notes', appState.notes);
             closeNotesModal();
         }
 
-        // Auto-save note on typing
         document.getElementById('notes-textarea').addEventListener('input', function () {
             if (!currentNotesSubject) return;
             appState.notes[currentNotesSubject] = this.value;
-            localStorage.setItem('za_notes', JSON.stringify(appState.notes));
-            const badge = document.getElementById('notes-saved-badge');
-            badge.style.opacity = '1';
-            clearTimeout(window._noteSaveTimer);
-            window._noteSaveTimer = setTimeout(() => { badge.style.opacity = '0'; }, 1500);
+            clearTimeout(window._cloudNoteTimer);
+            window._cloudNoteTimer = setTimeout(() => {
+                pushDataToCloud('notes', appState.notes);
+                const badge = document.getElementById('notes-saved-badge');
+                badge.style.opacity = '1';
+                setTimeout(() => { badge.style.opacity = '0'; }, 1500);
+            }, 600);
         });
 
         function copyNoteContent() {
@@ -1743,14 +1436,44 @@
             document.execCommand('copy');
         }
 
-        /* ==========================================
-           12. PAGE 3: POMODORO, AMBIENT AUDIO & MOODLE
-        =========================================== */
-        let pomoSeconds = 25 * 60;
-        let pomoInitialSeconds = 25 * 60;
-        let pomoInterval = null;
-        let pomoRunning = false;
+        /* 12. ONLINE LINKS (SYNCED) */
+        let activeLinkCourseId = null;
+        function joinOnlineLecture(courseId, courseName) {
+            playHaptic('light');
+            const savedUrl = appState.links[courseId];
+            if (savedUrl) window.open(savedUrl, '_blank', 'noopener,noreferrer');
+            else openLinkConfig(courseId, courseName);
+        }
 
+        function openLinkConfig(courseId, courseName) {
+            playHaptic('light');
+            activeLinkCourseId = courseId;
+            document.getElementById('link-modal-title').textContent = `إعداد رابط: ${courseName}`;
+            document.getElementById('link-modal-input').value = appState.links[courseId] || 'https://teams.microsoft.com';
+            const modal = document.getElementById('link-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeLinkModal() {
+            const modal = document.getElementById('link-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function saveCourseLink() {
+            playHaptic('success');
+            const val = document.getElementById('link-modal-input').value.trim();
+            if (val && activeLinkCourseId) {
+                appState.links[activeLinkCourseId] = val;
+                pushDataToCloud('links', appState.links);
+                closeLinkModal();
+                window.open(val, '_blank', 'noopener,noreferrer');
+            }
+        }
+
+        /* 13. POMODORO & AMBIENT */
+        let pomoSeconds = 25 * 60, pomoInitialSeconds = 25 * 60, pomoInterval = null, pomoRunning = false;
         function setPomodoroMode(mins, label) {
             playHaptic('light');
             pausePomodoro();
@@ -1760,11 +1483,9 @@
             updatePomodoroDisplay();
             [25, 5, 45].forEach(m => {
                 const btn = document.getElementById('pomo-' + m);
-                if (m === mins) {
-                    btn.className = 'px-3 py-1.5 rounded-lg bg-ios-blue text-white transition';
-                } else {
-                    btn.className = 'px-3 py-1.5 rounded-lg opacity-75 hover:opacity-100 transition';
-                }
+                btn.className = (m === mins)
+                    ? 'px-3 py-1.5 rounded-lg bg-ios-blue text-white transition'
+                    : 'px-3 py-1.5 rounded-lg opacity-75 hover:opacity-100 transition';
             });
         }
 
@@ -1809,7 +1530,6 @@
             updatePomodoroDisplay();
         }
 
-        // Synthesized Web Audio Ambient Sound Generator (100% self-contained)
         function stopAmbient() {
             if (ambientNodes) {
                 try {
@@ -1833,12 +1553,10 @@
             }
             stopAmbient();
             currentAmbientType = type;
-
             const ctx = getAudioContext();
             ambientNodes = [];
 
             if (type === 'rain' || type === 'white') {
-                // Generate soothing pink/brown noise buffer
                 const bufferSize = 2 * ctx.sampleRate;
                 const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
                 const output = noiseBuffer.getChannelData(0);
@@ -1852,17 +1570,14 @@
                 const whiteNoise = ctx.createBufferSource();
                 whiteNoise.buffer = noiseBuffer;
                 whiteNoise.loop = true;
-
                 const filter = ctx.createBiquadFilter();
                 filter.type = 'lowpass';
                 filter.frequency.value = type === 'rain' ? 950 : 1600;
-
                 whiteNoise.connect(filter);
                 filter.connect(ctx.destination);
                 whiteNoise.start(0);
                 ambientNodes.push(whiteNoise, filter);
             } else if (type === 'lofi') {
-                // Warm harmonic chill drone chord (Fmaj7 warm pad)
                 const freqs = [174.61, 220.00, 261.63, 329.63];
                 freqs.forEach(f => {
                     const osc = ctx.createOscillator();
@@ -1882,9 +1597,10 @@
             document.getElementById('amb-' + type).classList.add('border-ios-blue', 'bg-ios-blue/15');
         }
 
-        // Moodle Tasks Management
+        /* 14. MOODLE TASKS (SYNCED) */
         function renderMoodleTasks() {
             const list = document.getElementById('moodle-tasks-list');
+            if (!list) return;
             list.innerHTML = appState.moodleTasks.map(t => `
                 <div class="p-3.5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 flex items-center justify-between gap-3">
                     <label class="flex items-center gap-3 cursor-pointer flex-1 min-w-0">
@@ -1922,7 +1638,7 @@
             });
             titleEl.value = '';
             dueEl.value = '';
-            localStorage.setItem('za_moodle', JSON.stringify(appState.moodleTasks));
+            pushDataToCloud('moodleTasks', appState.moodleTasks);
             renderMoodleTasks();
         }
 
@@ -1932,7 +1648,7 @@
                 item.done = !item.done;
                 playHaptic(item.done ? 'success' : 'light');
                 if (item.done) launchConfetti();
-                localStorage.setItem('za_moodle', JSON.stringify(appState.moodleTasks));
+                pushDataToCloud('moodleTasks', appState.moodleTasks);
                 renderMoodleTasks();
             }
         }
@@ -1940,19 +1656,16 @@
         function deleteMoodleTask(id) {
             playHaptic('light');
             appState.moodleTasks = appState.moodleTasks.filter(t => t.id !== id);
-            localStorage.setItem('za_moodle', JSON.stringify(appState.moodleTasks));
+            pushDataToCloud('moodleTasks', appState.moodleTasks);
             renderMoodleTasks();
         }
 
-        /* ==========================================
-           13. LIGHTWEIGHT CONFETTI CELEBRATION
-        =========================================== */
+        /* 15. CONFETTI & EXPORT */
         function launchConfetti() {
             const canvas = document.getElementById('confetti-canvas');
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-
             const colors = ['#FF2D55', '#007AFF', '#34C759', '#FF9500', '#AF52DE', '#5AC8FA'];
             const pieces = Array.from({ length: 48 }, () => ({
                 x: canvas.width / 2 + (Math.random() - 0.5) * 160,
@@ -1964,7 +1677,6 @@
                 rot: Math.random() * 360,
                 vrot: (Math.random() - 0.5) * 10
             }));
-
             let frame = 0;
             function animate() {
                 frame++;
@@ -1972,7 +1684,7 @@
                 pieces.forEach(p => {
                     p.x += p.vx;
                     p.y += p.vy;
-                    p.vy += 0.35; // gravity
+                    p.vy += 0.35;
                     p.rot += p.vrot;
                     ctx.save();
                     ctx.translate(p.x, p.y);
@@ -1981,18 +1693,49 @@
                     ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
                     ctx.restore();
                 });
-                if (frame < 75) {
-                    requestAnimationFrame(animate);
-                } else {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                }
+                if (frame < 75) requestAnimationFrame(animate);
+                else ctx.clearRect(0, 0, canvas.width, canvas.height);
             }
             animate();
         }
 
-        /* ==========================================
-           14. INITIALIZATION ON WINDOW LOAD
-        =========================================== */
+        function exportScheduleICS() {
+            playHaptic('success');
+            const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Academic OS//AR', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'];
+            const dayCodeMap = { sun: 'SU', tue: 'TU', thu: 'TH' };
+            COURSES.filter(c => !c.isBreak).forEach(course => {
+                const byDay = course.days.map(d => dayCodeMap[d]).filter(Boolean).join(',');
+                const startHour = Math.floor(course.start);
+                const startMin = Math.round((course.start - startHour) * 60);
+                const endHour = Math.floor(course.end);
+                const endMin = Math.round((course.end - endHour) * 60);
+                const dtStart = `20250216T${String(startHour).padStart(2, '0')}${String(startMin).padStart(2, '0')}00`;
+                const dtEnd = `20250216T${String(endHour).padStart(2, '0')}${String(endMin).padStart(2, '0')}00`;
+                lines.push(
+                    'BEGIN:VEVENT',
+                    `UID:${course.id}@academic-os.local`,
+                    `SUMMARY:${course.name} (${course.room})`,
+                    `LOCATION:${course.room}`,
+                    `DESCRIPTION:الجدول الأكاديمي الذكي`,
+                    `DTSTART:${dtStart}`,
+                    `DTEND:${dtEnd}`,
+                    `RRULE:FREQ=WEEKLY;BYDAY=${byDay}`,
+                    'END:VEVENT'
+                );
+            });
+            lines.push('END:VCALENDAR');
+            const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Schedule.ics';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        /* 16. INITIALIZATION */
         window.onload = function () {
             applyTheme();
             updateSoundUI();
